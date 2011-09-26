@@ -1,0 +1,389 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svnroot/contrail-bio/!svn/ver/1/prototype
+END
+bubblefind-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/contrail-bio/!svn/ver/1/prototype/bubblefind-map.pl
+END
+graphdetails.pl
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/contrail-bio/!svn/ver/1/prototype/graphdetails.pl
+END
+unrolltandem-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/contrail-bio/!svn/ver/1/prototype/unrolltandem-reduce.pl
+END
+build-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/contrail-bio/!svn/ver/1/prototype/build-map.pl
+END
+pairmark-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/contrail-bio/!svn/ver/1/prototype/pairmark-reduce.pl
+END
+matepath-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/contrail-bio/!svn/ver/1/prototype/matepath-map.pl
+END
+bubblepop-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/contrail-bio/!svn/ver/1/prototype/bubblepop-reduce.pl
+END
+matedist-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/contrail-bio/!svn/ver/1/prototype/matedist-reduce.pl
+END
+pairmerge-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/contrail-bio/!svn/ver/1/prototype/pairmerge-reduce.pl
+END
+pairmark-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/contrail-bio/!svn/ver/1/prototype/pairmark-map.pl
+END
+matecleanlink-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/contrail-bio/!svn/ver/1/prototype/matecleanlink-map.pl
+END
+matefinalize-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/contrail-bio/!svn/ver/1/prototype/matefinalize-map.pl
+END
+bubblepop-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/contrail-bio/!svn/ver/1/prototype/bubblepop-map.pl
+END
+matedist-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/contrail-bio/!svn/ver/1/prototype/matedist-map.pl
+END
+preprocessor.pl
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/contrail-bio/!svn/ver/1/prototype/preprocessor.pl
+END
+cliplowcoverage-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/contrail-bio/!svn/ver/1/prototype/cliplowcoverage-reduce.pl
+END
+tagrepeats.pl
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svnroot/contrail-bio/!svn/ver/1/prototype/tagrepeats.pl
+END
+extract_neighborhood_mem.pl
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svnroot/contrail-bio/!svn/ver/1/prototype/extract_neighborhood_mem.pl
+END
+compressible-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/contrail-bio/!svn/ver/1/prototype/compressible-map.pl
+END
+threadresolve.pl
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/contrail-bio/!svn/ver/1/prototype/threadresolve.pl
+END
+matehop-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/contrail-bio/!svn/ver/1/prototype/matehop-map.pl
+END
+contrail.pl
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svnroot/contrail-bio/!svn/ver/1/prototype/contrail.pl
+END
+threadrepeat-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/contrail-bio/!svn/ver/1/prototype/threadrepeat-reduce.pl
+END
+pairmerge-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/contrail-bio/!svn/ver/1/prototype/pairmerge-map.pl
+END
+nodetype.pl
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svnroot/contrail-bio/!svn/ver/1/prototype/nodetype.pl
+END
+graph2fa.pl
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svnroot/contrail-bio/!svn/ver/1/prototype/graph2fa.pl
+END
+check-starts.pl
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/contrail-bio/!svn/ver/1/prototype/check-starts.pl
+END
+matebundle-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/contrail-bio/!svn/ver/1/prototype/matebundle-map.pl
+END
+bubblefind-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/contrail-bio/!svn/ver/1/prototype/bubblefind-reduce.pl
+END
+extract_neighborhood.pl
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/contrail-bio/!svn/ver/1/prototype/extract_neighborhood.pl
+END
+matehop-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/contrail-bio/!svn/ver/1/prototype/matehop-reduce.pl
+END
+emit-mers.pl
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/contrail-bio/!svn/ver/1/prototype/emit-mers.pl
+END
+quickmerge-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/contrail-bio/!svn/ver/1/prototype/quickmerge-map.pl
+END
+threadible-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/contrail-bio/!svn/ver/1/prototype/threadible-reduce.pl
+END
+fixgraph.pl
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svnroot/contrail-bio/!svn/ver/1/prototype/fixgraph.pl
+END
+threadresolve-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/contrail-bio/!svn/ver/1/prototype/threadresolve-reduce.pl
+END
+matefinalize-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/contrail-bio/!svn/ver/1/prototype/matefinalize-reduce.pl
+END
+get-results.sh
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/contrail-bio/!svn/ver/1/prototype/get-results.sh
+END
+unrolltandem-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/contrail-bio/!svn/ver/1/prototype/unrolltandem-map.pl
+END
+tipremove-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/contrail-bio/!svn/ver/1/prototype/tipremove-reduce.pl
+END
+draw
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svnroot/contrail-bio/!svn/ver/1/prototype/draw
+END
+matehopfinalize-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/contrail-bio/!svn/ver/1/prototype/matehopfinalize-reduce.pl
+END
+tipremove-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/contrail-bio/!svn/ver/1/prototype/tipremove-map.pl
+END
+emit-mercount.pl
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/contrail-bio/!svn/ver/1/prototype/emit-mercount.pl
+END
+count-kmers-mapper.pl
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svnroot/contrail-bio/!svn/ver/1/prototype/count-kmers-mapper.pl
+END
+graph2dot.pl
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/contrail-bio/!svn/ver/1/prototype/graph2dot.pl
+END
+quickmark-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/contrail-bio/!svn/ver/1/prototype/quickmark-reduce.pl
+END
+stats-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/contrail-bio/!svn/ver/1/prototype/stats-reduce.pl
+END
+build-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/contrail-bio/!svn/ver/1/prototype/build-reduce.pl
+END
+matepath-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/contrail-bio/!svn/ver/1/prototype/matepath-reduce.pl
+END
+stats-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/contrail-bio/!svn/ver/1/prototype/stats-map.pl
+END
+check-graph.pl
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/contrail-bio/!svn/ver/1/prototype/check-graph.pl
+END
+matecleanlink-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/contrail-bio/!svn/ver/1/prototype/matecleanlink-reduce.pl
+END
+threadible-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/contrail-bio/!svn/ver/1/prototype/threadible-map.pl
+END
+threadresolve-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/contrail-bio/!svn/ver/1/prototype/threadresolve-map.pl
+END
+threadrepeat-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/contrail-bio/!svn/ver/1/prototype/threadrepeat-map.pl
+END
+matebundle-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/contrail-bio/!svn/ver/1/prototype/matebundle-reduce.pl
+END
+run
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svnroot/contrail-bio/!svn/ver/1/prototype/run
+END
+matehopfinalize-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/contrail-bio/!svn/ver/1/prototype/matehopfinalize-map.pl
+END
+compressible-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/contrail-bio/!svn/ver/1/prototype/compressible-reduce.pl
+END
+cliplowcoverage-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/contrail-bio/!svn/ver/1/prototype/cliplowcoverage-map.pl
+END
+quickmerge-reduce.pl
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/contrail-bio/!svn/ver/1/prototype/quickmerge-reduce.pl
+END
+PAsm.pm
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svnroot/contrail-bio/!svn/ver/1/prototype/PAsm.pm
+END
+quickmark-map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/contrail-bio/!svn/ver/1/prototype/quickmark-map.pl
+END

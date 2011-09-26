@@ -1,0 +1,167 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svnroot/contrail-bio/!svn/ver/1/src/contrail
+END
+ContrailConfig.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/ContrailConfig.java
+END
+Graph2Fasta.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/Graph2Fasta.java
+END
+Threadible.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/Threadible.java
+END
+UnrollTandem.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/UnrollTandem.java
+END
+TailInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/TailInfo.java
+END
+PairMark.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/PairMark.java
+END
+ThreadResolve.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/ThreadResolve.java
+END
+MateFinalize.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/MateFinalize.java
+END
+ToolTemplate.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/ToolTemplate.java
+END
+MateDist.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/MateDist.java
+END
+PairMerge.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/PairMerge.java
+END
+Contrail.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/Contrail.java
+END
+MateHopFinalize.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/MateHopFinalize.java
+END
+FindBubbles.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/FindBubbles.java
+END
+MateBundle.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/MateBundle.java
+END
+BuildGraph.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/BuildGraph.java
+END
+Node.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/Node.java
+END
+Compressible.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/Compressible.java
+END
+QuickMark.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/QuickMark.java
+END
+MateCleanLinks.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/MateCleanLinks.java
+END
+RemoveLowCoverage.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/RemoveLowCoverage.java
+END
+ThreadRepeats.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/ThreadRepeats.java
+END
+QuickMerge.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/QuickMerge.java
+END
+PopBubbles.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/PopBubbles.java
+END
+MateHop.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/MateHop.java
+END
+RemoveTips.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/RemoveTips.java
+END
+Stats.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svnroot/contrail-bio/!svn/ver/1/src/contrail/Stats.java
+END

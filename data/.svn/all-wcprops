@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svnroot/contrail-bio/!svn/ver/1/data
+END
+arbrcrd.ref.fa
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svnroot/contrail-bio/!svn/ver/1/data/arbrcrd.ref.fa
+END
+Ec10k.sim1.fq
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/contrail-bio/!svn/ver/1/data/Ec10k.sim1.fq
+END
+Ec10k.sim2.fq
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/contrail-bio/!svn/ver/1/data/Ec10k.sim2.fq
+END
+Ec10k.sim.sfa
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/contrail-bio/!svn/ver/1/data/Ec10k.sim.sfa
+END
+simulate-reads.pl
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/contrail-bio/!svn/ver/1/data/simulate-reads.pl
+END
+Ecoli.10k.fa
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svnroot/contrail-bio/!svn/ver/1/data/Ecoli.10k.fa
+END
+Ba10k.sim1.fq
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/contrail-bio/!svn/ver/1/data/Ba10k.sim1.fq
+END
+Ba10k.sim2.fq
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/contrail-bio/!svn/ver/1/data/Ba10k.sim2.fq
+END
+Ba10k.sim.sfa
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/contrail-bio/!svn/ver/1/data/Ba10k.sim.sfa
+END
+Banthracis.10k.fa
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/contrail-bio/!svn/ver/1/data/Banthracis.10k.fa
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svnroot/contrail-bio/!svn/ver/1/data/README
+END
+arbrcrd.36.sfa
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svnroot/contrail-bio/!svn/ver/1/data/arbrcrd.36.sfa
+END
