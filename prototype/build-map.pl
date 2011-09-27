@@ -122,6 +122,7 @@ while(<>)
     if (($i == 0) && ($ud eq 'r')) 
     { $ustate = 6; }
 
+    # edge type between mers
     # see "print" command for the key-value emission below
     # the i k-mer ("$t") gets the whatever state rf / fr / ff? / rr? was returned from the canonical function
     # the i+1 k-mer ("$tr") does it always get fr due to the flip_link function ?
@@ -137,7 +138,8 @@ while(<>)
       $vstate = "3";
     }
 
-    # leading and trailing nucleotides - seem inside the k-mer though
+    # id of neighboring node
+    # leading and trailing nucleotides 
     my $f = substr($seq, $i, 1);
     my $l = substr($seq, $i+$K, 1);
 

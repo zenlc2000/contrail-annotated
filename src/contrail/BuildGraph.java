@@ -205,7 +205,10 @@ public class BuildGraph extends Configured implements Tool
 			
 			String mertag = null;
 			float cov = 0;
-			
+		
+                        // Hash keyed based on "f" or "r" direction of the edge
+                        // Contains nested hash that is keyed based on single-base extension of the k-mer (neighboring k-mer)
+                        // and stacks upon a list the read ids that contain that neighboring k-mer	
 			Map<String, Map<String, List<String>>> edges = new HashMap<String, Map<String, List<String>>>();
 			
 			while(iter.hasNext())
