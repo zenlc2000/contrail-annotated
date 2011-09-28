@@ -209,6 +209,9 @@ public class BuildGraph extends Configured implements Tool
                         // Hash keyed based on "f" or "r" direction of the edge
                         // Contains nested hash that is keyed based on single-base extension of the k-mer (neighboring k-mer)
                         // and stacks upon a list the read ids that contain that neighboring k-mer	
+
+                        //  storage the de Bruijn in the hash below
+                        //  {forward / reverse} -> [ { A / C / G / T } -> [read_id1, read_id2, ...]  ]
 			Map<String, Map<String, List<String>>> edges = new HashMap<String, Map<String, List<String>>>();
 			
 			while(iter.hasNext())
