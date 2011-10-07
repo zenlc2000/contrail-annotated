@@ -20,13 +20,13 @@ my $SRCDIR = dirname($0);
 my $WORKDIR = ".";
 
 ## Path to Hadoop binary
-my $HADOOP    = "/opt/UMhadoop/bin/hadoop";
+my $HADOOP    = "/opt/hadoop/bin/hadoop";
 
 ## Path to Hadoop streaming jar
-my $STREAMING = "/opt/UMhadoop/contrib/streaming/hadoop-0.20.0-streaming.jar";
+my $STREAMING = "/opt/hadoop/contrib/streaming/hadoop-0.20.2-streaming.jar";
 
 ## Path to base HDFS location
-my $HDFSBASE  = "/users/mschatz/";
+my $HDFSBASE  = "/opt/hbase";
 
 ## Number of reducers
 my $TASKS = 80;
@@ -41,35 +41,11 @@ my $DOCLEANUP = 1;
 my $hostname = `hostname`; chomp($hostname);
 
 ## Local scratch dir and memory
-my $SCRATCH_DIR = "/tmp";
+my $SCRATCH_DIR = "/usr/local/scratch/kkrampis/";
 my $SORT_MEM    = "1G";
 my $LOCALNODES  = 1000;
 
-if (($hostname eq "ginkgo.umiacs.umd.edu") ||
-    ($hostname eq "walnut.umiacs.umd.edu"))
-{
-  $SCRATCH_DIR = "/scratch1/mschatz";
-  $SORT_MEM    = "50G";
-  $LOCALNODES  = 1000000;
-}
 
-
-## IBM Settings
-my $USEIBM = 1;
-if ($USEIBM)
-{
-  #$HADOOP    = "/Users/mschatz/build/hadoop-0.20.1+133/bin/hadoop";
-  #$STREAMING = "/Users/mschatz/build/hadoop-0.20.1+133/contrib/streaming/hadoop-0.20.1+133-streaming.jar";
-
-  $HADOOP    = "/nfshomes/mschatz/build/packages/hadoop-0.20.1+133/bin/hadoop";
-  $STREAMING = "/nfshomes/mschatz/build/packages/hadoop-0.20.1+133/contrib/streaming/hadoop-0.20.1+133-streaming.jar";
-
-  $TASKS = 500;
-  $HDFSBASE  = "/umdnsf/shared/SRA000271/";
-  $HADOOP_COMPRESS = 1;
-
-  $LOCALNODES = 1000;
-}
 
 
 ## Logging
