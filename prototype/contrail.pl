@@ -20,10 +20,14 @@ my $SRCDIR = dirname($0);
 my $WORKDIR = ".";
 
 ## Path to Hadoop binary
-my $HADOOP    = "/opt/hadoop/bin/hadoop";
+#my $HADOOP    = "/opt/hadoop/bin/hadoop";
+#negative test
+my $HADOOP    = "/opt/hadoop";
 
 ## Path to Hadoop streaming jar
-my $STREAMING = "/opt/hadoop/contrib/streaming/hadoop-0.20.2-streaming.jar";
+#my $STREAMING = "/opt/hadoop/contrib/streaming/hadoop-0.20.2-streaming.jar";
+#negative test
+my $STREAMING = "/opt/hadoop-0.20.2-streaming.jar";
 
 ## Path to base HDFS location
 my $HDFSBASE  = "/opt/hbase";
