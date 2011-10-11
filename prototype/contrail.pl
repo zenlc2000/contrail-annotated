@@ -25,8 +25,8 @@ my $HADOOP    = "/opt/hadoop/bin/hadoop";
 ## Path to Hadoop streaming jar
 my $STREAMING = "/opt/hadoop/contrib/streaming/hadoop-0.20.2-streaming.jar";
 
-## Path to base HDFS location
-my $HDFSBASE  = "/opt/hbase";
+## Path to  HDFS (base dir name) location
+my $HDFSBASE  = "hdfs://hadoop.jcvi.org:9000";
 
 ## Number of reducers
 my $TASKS = 80;
