@@ -146,6 +146,7 @@ while(<>)
     $f = rc($f);
 
     # keeps track if the k-mer was seen already on the read
+    # testing git
     my $seen = (exists $seen{$u}) || (exists $seen{$v}) || ($u eq $v);
     $seen{$u} = $i;
 
