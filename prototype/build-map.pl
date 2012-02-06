@@ -101,6 +101,8 @@ while(<>)
   $goodreads++;
   $goodbp += $l;
 
+  #the $i k-mer starts at the 5' of the read
+  #the $i+1 k-mer get incremental state based on the counter ?
   my $ustate = "5";
   my $vstate = "i";
 
@@ -118,7 +120,8 @@ while(<>)
     # $uc / $vc is the canonical i / i+1 k-mer. The canonical can be the reverse complement.
     my ($uc, $ud) = canonical($u);
     my ($vc, $vd) = canonical($v);
-
+ 
+    #$i k-mer has reverse-complement as lexigraphically better we start at the 3' of the read 
     if (($i == 0) && ($ud eq 'r')) 
     { $ustate = 6; }
 
@@ -140,6 +143,7 @@ while(<>)
 
     # id of neighboring node
     # leading and trailing nucleotides 
+    #print "$seq \t $i \t $i+$K \n"; 
     my $f = substr($seq, $i, 1);
     my $l = substr($seq, $i+$K, 1);
 
@@ -158,6 +162,9 @@ while(<>)
 
     # "$tag" is the read id
     # what's up with the weird notation on the states ?
+
+    #k-mer(numeric)\direction\trailing base\read_id-chunk\k-mer place on read
+    #print "1--$uc\t$t\t$l\t$tag#$chunk\t$ustate\n";
     print "$uc\t$t\t$l\t$tag$chunk\t$ustate\n";
 
     if ($seen)
@@ -166,6 +173,7 @@ while(<>)
       #print STDERR "repeat internal to $tag: $vc v$i $chunk\n";
     }
 
+    #print "2--$vc\t$tr\t$f\t$tag#$chunk\t$vstate\n";
     print "$vc\t$tr\t$f\t$tag$chunk\t$vstate\n";
 
     $ustate = "m";

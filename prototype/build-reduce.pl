@@ -95,8 +95,10 @@ while (<>)
   if ($THREADREADS)
   {
     if ((!defined $node->{$type}->{$neighbor}) ||
+        #reset when reads go over a certain number for a specific combination of "Kmer seq -> edge type -> neighboor nucleotide"
         (scalar @{$node->{$type}->{$neighbor}} < $MAXTHREADREADS))
     {
+      #store graph as 3-level nested hash "Kmer seq -> edge type -> neighboor nucleotide -> @(read_id+Kmer_count)"
       push @{$node->{$type}->{$neighbor}}, $tag;
     }
   }
