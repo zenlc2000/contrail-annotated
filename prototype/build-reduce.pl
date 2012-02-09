@@ -6,8 +6,13 @@ use PAsm;
 
 my $nodecnt = 0;
 
+# the core representation of the graph structure is essentially the same with build-map.pl
+# what build-reduce.pl and this function below does is to simplify the graph by counting edge degrees
+
 sub simplify_and_print
 {
+  #$nodeid represents a set of rows with a specific K-mer we processed and send off
+  #here for printing
   my $nodeid = shift;
   my $node = shift;
 
@@ -34,6 +39,8 @@ sub simplify_and_print
 
       if (exists $node->{$t})
       {
+          #number of edges on the node of the graph. It represents how many different nodes (neighboors: A/C/G/T) 
+          #we can we find in each direction the edge points to
         $degree += scalar keys %{$node->{$t}};
       }
     }
@@ -80,10 +87,15 @@ my $nodeid = undef;
 while (<>)
 {
   chomp;
-
+  
+  #Here we are guaranteed to have all identical k-mers ($curnode) streaming in together
+  #This is because Hadoop sorts the output of the map phase before it passes it to the reduce 
   #my ($curnode, $type, $neighbor, $tag) = split /\t/, $_;
   my ($curnode, $type, $neighbor, $tag, $state) = split /\t/, $_;
 
+  #first row of data coming in it skips because there is no $nodeid defined
+  #then once a row with a different K-mer comes we send it off to processing
+  #(remember rows are sorted by K-mer, so we are getting sets of rows with the same K-mer)
   if ((defined $nodeid) && ($curnode ne $nodeid))
   {
     simplify_and_print($nodeid, $node);
@@ -92,24 +104,33 @@ while (<>)
 
   $nodeid = $curnode;
 
+  #Here we build the core data structure that stores our graph, as a 3-layered hash
+  #{ K-mer -> direction (ff/fr/rf/rr) -> neighbooring k-mer (A/C/G/T) } - { read_id }
+  #                    KEY                                              -   VALUE
+
   if ($THREADREADS)
   {
+    #if we want to allow multiple reads threading through the each node of the graph
     if ((!defined $node->{$type}->{$neighbor}) ||
         (scalar @{$node->{$type}->{$neighbor}} < $MAXTHREADREADS))
     {
       push @{$node->{$type}->{$neighbor}}, $tag;
     }
   }
+    #once we go over the number of reads allowed to thread (collapse) over a node we re-set
+    #the data structure
   else
   {
     $node->{$type}->{$neighbor} = 1;
   }
 
+  #see PAsm.pm - we definte a $MERTAG nucleotide. What is the purpose of keeping this ?
   if ((!defined $node->{$MERTAG}) || ($tag lt $node->{$MERTAG}->[0]))
   {
     $node->{$MERTAG}->[0] = $tag;
   }
 
+  #the states save where we are on the read (5', 3' etc). Based on that calculate coverage
   if ($state ne "i")
   {
     $node->{$COVERAGE}->[0]++;
