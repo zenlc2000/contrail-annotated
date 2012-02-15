@@ -1,0 +1,5 @@
+reporter:counter:asm,reads_skipped,0
+reporter:counter:asm,reads_short,0
+reporter:counter:asm,reads_good,54
+reporter:counter:asm,reads_goodbp,11003
+reporter:counter:asm,reads_files,1

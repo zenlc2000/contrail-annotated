@@ -1,0 +1,5 @@
+reporter:counter:asm,chains,508
+reporter:counter:asm,cchains,0
+reporter:counter:asm,totalchainlen,508
+reporter:counter:asm,saved,0
+reporter:counter:asm,needcompress,0

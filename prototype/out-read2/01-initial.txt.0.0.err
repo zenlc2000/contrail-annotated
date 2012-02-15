@@ -1,0 +1,2 @@
+reporter:counter:asm,non_compressible,2
+reporter:counter:asm,compressible_neighborhood,6

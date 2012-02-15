@@ -1,0 +1,92 @@
+Running: contrail.pl -reads /home/pkumari/priti/tests/samplereads/Reads2 -work out 3 -start initial
+
+== Starting time 2012-02-13 11:33:16
+Preprocess:	 0 s  5 (100.00%) good reads, 25 bp
+Build Initial:	 0 s  10 nodes
+  Quick Merge:	 0 s  2 saved
+  Compressible:	 0 s  6 compressible
+  QMark  1:	 0 s  6 marked
+  QMerge 1:	 0 s  0 remaining (-100.00%)
+  Save results to 02-initialcmp.txt
+
+Compute Stats:	 1 s
+
+Stats 02-initialcmp.txt
+====================================================================================
+Threshold         Cnt       Sum         Mean       N50    N50Cnt       Deg       Cov
+>1                  5        20         4.00         0         0      1.90      1.53
+
+== Total time: initial 1 s 7 steps
+Remove Tips 1:	 0 s  2 tips removed, 0 remaining
+  Compressible:	 0 s  2 compressible
+  QMark  1:	 0 s  3 marked
+  QMerge 1:	 0 s  0 remaining (-100.00%)
+  Save results to 03-notips.txt.1.cmp
+
+Remove Tips 2:	 0 s  1 tips removed, 0 remaining
+  Compressible:	 0 s  0 compressible
+  Save results to 03-notips.txt.2.cmp
+
+Remove Tips 3:	 0 s  0 tips removed, 0 remaining
+  Save results to 04-notipscmp.txt
+
+Compute Stats:	 0 s
+
+Stats 04-notipscmp.txt
+====================================================================================
+Threshold         Cnt       Sum         Mean       N50    N50Cnt       Deg       Cov
+>1                  1         4         4.00         0         0      2.00      2.00
+
+== Total time: removetips 0 s 8 steps
+Find Bubbles 1:	 0 s  1 potential bubbles
+  Pop 1:	 0 s  0 bubbles popped
+  Save results to 06-nobubblescmp.txt
+
+Compute Stats:	 0 s
+
+Stats 06-nobubblescmp.txt
+====================================================================================
+Threshold         Cnt       Sum         Mean       N50    N50Cnt       Deg       Cov
+>1                  1         4         4.00         0         0      2.00      2.00
+
+== Total time: popbubbles 0 s 3 steps
+Remove Low Coverage:	 0 s  1 low coverage nodes removed
+  Compressible:	 0 s  0 compressible
+  Save results to 07-lowcov.txt.c
+
+Remove Tips 1:	 0 s  0 tips removed, 0 remaining
+  Save results to 07-lowcov.txt.tc
+
+Find Bubbles 1:	 0 s  0 potential bubbles
+  Pop 1:	 0 s  0 bubbles popped
+  Save results to 08-lowcovcmp.txt
+
+Compute Stats:	 1 s
+
+Stats 08-lowcovcmp.txt
+====================================================================================
+Threshold         Cnt       Sum         Mean       N50    N50Cnt       Deg       Cov
+
+== Total time: lowcov 1 s 6 steps
+Thread Repeats 1:	 0 s  0 threadible (0 xcut, 0 half, 0 deadend)
+  Save results to 10-repeatscmp.txt
+
+Create fasta
+Compute Stats:	 0 s
+
+Stats 10-repeatscmp.txt
+====================================================================================
+Threshold         Cnt       Sum         Mean       N50    N50Cnt       Deg       Cov
+
+== Total time: repeats 0 s 2 steps
+  Save results to 99-final.txt
+  Save results to 99-final.txt.stats
+== Total time: scaffolding 0 s 0 steps
+Create Fasta
+== Total time: fasta 0 s 0 steps
+Checking graph
+==
+Checked 0 bp in 0 nodes, edges: 0 ok, 0 dup, 0 missing, 0 bad, thread: 0 ok 0 bad
+== Total time: status 0 s 0 steps
+== Stopping time 2012-02-13 11:33:18
+== Total time 2 s 0 steps

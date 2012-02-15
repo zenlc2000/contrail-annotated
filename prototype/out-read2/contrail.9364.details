@@ -1,0 +1,359 @@
+Running: contrail.pl -reads /home/pkumari/priti/tests/samplereads/Reads2 -work out 3 -start initial
+Hostname: pkumari-lx
+System: Linux pkumari-lx 2.6.18-274.7.1.el5 #1 SMP Thu Oct 20 16:21:01 EDT 2011 x86_64 x86_64 x86_64 GNU/Linux
+
+
+== Starting time 2012-02-13 11:33:16
+== Preprocess 2012-02-13 11:33:16
+RunStep:
+ desc: Preprocess
+ mapper: build-map.pl
+ reducer: 
+ input: /home/pkumari/priti/tests/samplereads/Reads2
+ output: 00-basic.txt-prep
+ extra: 21
+Preprocess:	
+  (./build-map.pl /home/pkumari/priti/tests/samplereads/Reads2 > out/00-basic.txt-prep) >& out/00-basic.txt-prep.err
+ 0 s  5 (100.00%) good reads, 25 bp
+== Build Initial 2012-02-13 11:33:16
+RunStep:
+ desc: Build Initial
+ mapper: cat
+ reducer: build-reduce.pl
+ input: 00-basic.txt-prep
+ output: 00-basic.txt
+ extra: 22
+Build Initial:	
+  (cat out/00-basic.txt-prep | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./build-reduce.pl > out/00-basic.txt) >& out/00-basic.txt.err
+ 0 s  10 nodes
+reads_good: 5
+reads_short: 0
+reads_skip: 0
+reads_goodbp: 25
+nodecnt: 10
+==   Quick Merge 2012-02-13 11:33:16
+RunStep:
+ desc:   Quick Merge
+ mapper: quickmerge-map.pl
+ reducer: quickmerge-reduce.pl
+ input: 00-basic.txt
+ output: 01-initial.txt
+  Quick Merge:	
+  (./quickmerge-map.pl out/00-basic.txt | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./quickmerge-reduce.pl > out/01-initial.txt) >& out/01-initial.txt.err
+ 0 s  2 saved
+==   Compressible 2012-02-13 11:33:16
+RunStep:
+ desc:   Compressible
+ mapper: compressible-map.pl
+ reducer: compressible-reduce.pl
+ input: 01-initial.txt
+ output: 01-initial.txt.0
+  Compressible:	
+  (./compressible-map.pl out/01-initial.txt | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./compressible-reduce.pl > out/01-initial.txt.0) >& out/01-initial.txt.0.err
+ 0 s  6 compressible
+==   QMark  1 2012-02-13 11:33:16
+RunStep:
+ desc:   QMark  1
+ mapper: quickmark-map.pl
+ reducer: quickmark-reduce.pl
+ input: 01-initial.txt.0
+ output: 01-initial.txt.0.0
+  QMark  1:	
+  (./quickmark-map.pl out/01-initial.txt.0 | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./quickmark-reduce.pl > out/01-initial.txt.0.0) >& out/01-initial.txt.0.0.err
+ 0 s  6 marked
+==   QMerge 1 2012-02-13 11:33:16
+RunStep:
+ desc:   QMerge 1
+ mapper: quickmerge-map.pl
+ reducer: quickmerge-reduce.pl
+ input: 01-initial.txt.0.0
+ output: 01-initial.txt.1
+  QMerge 1:	
+  (./quickmerge-map.pl out/01-initial.txt.0.0 | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./quickmerge-reduce.pl > out/01-initial.txt.1) >& out/01-initial.txt.1.err
+ 0 sRemoving old 01-initial.txt.0
+Removing old 01-initial.txt.0.0
+  0 remaining (-100.00%)
+  Save results to 02-initialcmp.txt
+
+== Compute Stats 2012-02-13 11:33:16
+RunStep:
+ desc: Compute Stats
+ mapper: stats-map.pl
+ reducer: stats-reduce.pl
+ input: 02-initialcmp.txt
+ output: 02-initialcmp.txt.stats
+ extra: 0
+ conf:  -jobconf mapred.map.tasks=80 -jobconf mapred.reduce.tasks=1
+Compute Stats:	
+  (./stats-map.pl out/02-initialcmp.txt | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./stats-reduce.pl > out/02-initialcmp.txt.stats) >& out/02-initialcmp.txt.stats.err
+ 1 s
+
+Stats 02-initialcmp.txt
+====================================================================================
+Threshold         Cnt       Sum         Mean       N50    N50Cnt       Deg       Cov
+>1                  5        20         4.00         0         0      1.90      1.53
+
+== Total time: initial 1 s 7 steps
+== Remove Tips 1 2012-02-13 11:33:17
+RunStep:
+ desc: Remove Tips 1
+ mapper: tipremove-map.pl
+ reducer: tipremove-reduce.pl
+ input: 02-initialcmp.txt
+ output: 03-notips.txt.1
+Remove Tips 1:	
+  (./tipremove-map.pl out/02-initialcmp.txt | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./tipremove-reduce.pl > out/03-notips.txt.1) >& out/03-notips.txt.1.err
+ 0 s  2 tips removed, 0 remaining
+==   Compressible 2012-02-13 11:33:17
+RunStep:
+ desc:   Compressible
+ mapper: compressible-map.pl
+ reducer: compressible-reduce.pl
+ input: 03-notips.txt.1
+ output: 03-notips.txt.1.0
+  Compressible:	
+  (./compressible-map.pl out/03-notips.txt.1 | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./compressible-reduce.pl > out/03-notips.txt.1.0) >& out/03-notips.txt.1.0.err
+ 0 s  2 compressible
+==   QMark  1 2012-02-13 11:33:17
+RunStep:
+ desc:   QMark  1
+ mapper: quickmark-map.pl
+ reducer: quickmark-reduce.pl
+ input: 03-notips.txt.1.0
+ output: 03-notips.txt.1.0.0
+  QMark  1:	
+  (./quickmark-map.pl out/03-notips.txt.1.0 | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./quickmark-reduce.pl > out/03-notips.txt.1.0.0) >& out/03-notips.txt.1.0.0.err
+ 0 s  3 marked
+==   QMerge 1 2012-02-13 11:33:17
+RunStep:
+ desc:   QMerge 1
+ mapper: quickmerge-map.pl
+ reducer: quickmerge-reduce.pl
+ input: 03-notips.txt.1.0.0
+ output: 03-notips.txt.1.1
+  QMerge 1:	
+  (./quickmerge-map.pl out/03-notips.txt.1.0.0 | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./quickmerge-reduce.pl > out/03-notips.txt.1.1) >& out/03-notips.txt.1.1.err
+ 0 sRemoving old 03-notips.txt.1.0
+Removing old 03-notips.txt.1.0.0
+  0 remaining (-100.00%)
+  Save results to 03-notips.txt.1.cmp
+
+Removing old 03-notips.txt.1
+== Remove Tips 2 2012-02-13 11:33:17
+RunStep:
+ desc: Remove Tips 2
+ mapper: tipremove-map.pl
+ reducer: tipremove-reduce.pl
+ input: 03-notips.txt.1.cmp
+ output: 03-notips.txt.2
+Remove Tips 2:	
+  (./tipremove-map.pl out/03-notips.txt.1.cmp | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./tipremove-reduce.pl > out/03-notips.txt.2) >& out/03-notips.txt.2.err
+ 0 s  1 tips removed, 0 remaining
+Removing old 03-notips.txt.1.cmp
+==   Compressible 2012-02-13 11:33:17
+RunStep:
+ desc:   Compressible
+ mapper: compressible-map.pl
+ reducer: compressible-reduce.pl
+ input: 03-notips.txt.2
+ output: 03-notips.txt.2.0
+  Compressible:	
+  (./compressible-map.pl out/03-notips.txt.2 | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./compressible-reduce.pl > out/03-notips.txt.2.0) >& out/03-notips.txt.2.0.err
+ 0 s  0 compressible
+  Save results to 03-notips.txt.2.cmp
+
+Removing old 03-notips.txt.2
+== Remove Tips 3 2012-02-13 11:33:17
+RunStep:
+ desc: Remove Tips 3
+ mapper: tipremove-map.pl
+ reducer: tipremove-reduce.pl
+ input: 03-notips.txt.2.cmp
+ output: 03-notips.txt.3
+Remove Tips 3:	
+  (./tipremove-map.pl out/03-notips.txt.2.cmp | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./tipremove-reduce.pl > out/03-notips.txt.3) >& out/03-notips.txt.3.err
+ 0 s  0 tips removed, 0 remaining
+Removing old 03-notips.txt.3
+  Save results to 04-notipscmp.txt
+
+== Compute Stats 2012-02-13 11:33:17
+RunStep:
+ desc: Compute Stats
+ mapper: stats-map.pl
+ reducer: stats-reduce.pl
+ input: 04-notipscmp.txt
+ output: 04-notipscmp.txt.stats
+ extra: 0
+ conf:  -jobconf mapred.map.tasks=80 -jobconf mapred.reduce.tasks=1
+Compute Stats:	
+  (./stats-map.pl out/04-notipscmp.txt | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./stats-reduce.pl > out/04-notipscmp.txt.stats) >& out/04-notipscmp.txt.stats.err
+ 0 s
+
+Stats 04-notipscmp.txt
+====================================================================================
+Threshold         Cnt       Sum         Mean       N50    N50Cnt       Deg       Cov
+>1                  1         4         4.00         0         0      2.00      2.00
+
+== Total time: removetips 0 s 8 steps
+== Find Bubbles 1 2012-02-13 11:33:17
+RunStep:
+ desc: Find Bubbles 1
+ mapper: bubblefind-map.pl
+ reducer: bubblefind-reduce.pl
+ input: 04-notipscmp.txt
+ output: 05-nobubbles.txt.1.f
+Find Bubbles 1:	
+  (./bubblefind-map.pl out/04-notipscmp.txt | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./bubblefind-reduce.pl > out/05-nobubbles.txt.1.f) >& out/05-nobubbles.txt.1.f.err
+ 0 s  1 potential bubbles
+==   Pop 1 2012-02-13 11:33:17
+RunStep:
+ desc:   Pop 1
+ mapper: bubblepop-map.pl
+ reducer: bubblepop-reduce.pl
+ input: 05-nobubbles.txt.1.f
+ output: 05-nobubbles.txt.1
+  Pop 1:	
+  (./bubblepop-map.pl out/05-nobubbles.txt.1.f | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./bubblepop-reduce.pl > out/05-nobubbles.txt.1) >& out/05-nobubbles.txt.1.err
+ 0 s  0 bubbles popped
+Removing old 05-nobubbles.txt.1.f
+Removing old 05-nobubbles.txt.1
+  Save results to 06-nobubblescmp.txt
+
+== Compute Stats 2012-02-13 11:33:17
+RunStep:
+ desc: Compute Stats
+ mapper: stats-map.pl
+ reducer: stats-reduce.pl
+ input: 06-nobubblescmp.txt
+ output: 06-nobubblescmp.txt.stats
+ extra: 0
+ conf:  -jobconf mapred.map.tasks=80 -jobconf mapred.reduce.tasks=1
+Compute Stats:	
+  (./stats-map.pl out/06-nobubblescmp.txt | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./stats-reduce.pl > out/06-nobubblescmp.txt.stats) >& out/06-nobubblescmp.txt.stats.err
+ 0 s
+
+Stats 06-nobubblescmp.txt
+====================================================================================
+Threshold         Cnt       Sum         Mean       N50    N50Cnt       Deg       Cov
+>1                  1         4         4.00         0         0      2.00      2.00
+
+== Total time: popbubbles 0 s 3 steps
+== Remove Low Coverage 2012-02-13 11:33:17
+RunStep:
+ desc: Remove Low Coverage
+ mapper: cliplowcoverage-map.pl
+ reducer: cliplowcoverage-reduce.pl
+ input: 06-nobubblescmp.txt
+ output: 07-lowcov.txt
+Remove Low Coverage:	
+  (./cliplowcoverage-map.pl out/06-nobubblescmp.txt | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./cliplowcoverage-reduce.pl > out/07-lowcov.txt) >& out/07-lowcov.txt.err
+ 0 s  1 low coverage nodes removed
+==   Compressible 2012-02-13 11:33:17
+RunStep:
+ desc:   Compressible
+ mapper: compressible-map.pl
+ reducer: compressible-reduce.pl
+ input: 07-lowcov.txt
+ output: 07-lowcov.txt.0
+  Compressible:	
+  (./compressible-map.pl out/07-lowcov.txt | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./compressible-reduce.pl > out/07-lowcov.txt.0) >& out/07-lowcov.txt.0.err
+ 0 s  0 compressible
+  Save results to 07-lowcov.txt.c
+
+== Remove Tips 1 2012-02-13 11:33:17
+RunStep:
+ desc: Remove Tips 1
+ mapper: tipremove-map.pl
+ reducer: tipremove-reduce.pl
+ input: 07-lowcov.txt.c
+ output: 07-lowcov.txt.t.1
+Remove Tips 1:	
+  (./tipremove-map.pl out/07-lowcov.txt.c | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./tipremove-reduce.pl > out/07-lowcov.txt.t.1) >& out/07-lowcov.txt.t.1.err
+ 0 s  0 tips removed, 0 remaining
+Removing old 07-lowcov.txt.t.1
+  Save results to 07-lowcov.txt.tc
+
+== Find Bubbles 1 2012-02-13 11:33:17
+RunStep:
+ desc: Find Bubbles 1
+ mapper: bubblefind-map.pl
+ reducer: bubblefind-reduce.pl
+ input: 07-lowcov.txt.tc
+ output: 07-lowcov.txt.b.1.f
+Find Bubbles 1:	
+  (./bubblefind-map.pl out/07-lowcov.txt.tc | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./bubblefind-reduce.pl > out/07-lowcov.txt.b.1.f) >& out/07-lowcov.txt.b.1.f.err
+ 0 s  0 potential bubbles
+==   Pop 1 2012-02-13 11:33:17
+RunStep:
+ desc:   Pop 1
+ mapper: bubblepop-map.pl
+ reducer: bubblepop-reduce.pl
+ input: 07-lowcov.txt.b.1.f
+ output: 07-lowcov.txt.b.1
+  Pop 1:	
+  (./bubblepop-map.pl out/07-lowcov.txt.b.1.f | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./bubblepop-reduce.pl > out/07-lowcov.txt.b.1) >& out/07-lowcov.txt.b.1.err
+ 0 s  0 bubbles popped
+Removing old 07-lowcov.txt.b.1.f
+Removing old 07-lowcov.txt.b.1
+  Save results to 08-lowcovcmp.txt
+
+== Compute Stats 2012-02-13 11:33:17
+RunStep:
+ desc: Compute Stats
+ mapper: stats-map.pl
+ reducer: stats-reduce.pl
+ input: 08-lowcovcmp.txt
+ output: 08-lowcovcmp.txt.stats
+ extra: 0
+ conf:  -jobconf mapred.map.tasks=80 -jobconf mapred.reduce.tasks=1
+Compute Stats:	
+  (./stats-map.pl out/08-lowcovcmp.txt | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./stats-reduce.pl > out/08-lowcovcmp.txt.stats) >& out/08-lowcovcmp.txt.stats.err
+ 1 s
+
+Stats 08-lowcovcmp.txt
+====================================================================================
+Threshold         Cnt       Sum         Mean       N50    N50Cnt       Deg       Cov
+
+== Total time: lowcov 1 s 6 steps
+== Thread Repeats 1 2012-02-13 11:33:18
+RunStep:
+ desc: Thread Repeats 1
+ mapper: threadrepeat-map.pl
+ reducer: threadrepeat-reduce.pl
+ input: 08-lowcovcmp.txt
+ output: 09-repeats.txt.1.threads
+Thread Repeats 1:	
+  (./threadrepeat-map.pl out/08-lowcovcmp.txt | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./threadrepeat-reduce.pl > out/09-repeats.txt.1.threads) >& out/09-repeats.txt.1.threads.err
+ 0 s  0 threadible (0 xcut, 0 half, 0 deadend)
+  Save results to 10-repeatscmp.txt
+
+Create fasta
+== Compute Stats 2012-02-13 11:33:18
+RunStep:
+ desc: Compute Stats
+ mapper: stats-map.pl
+ reducer: stats-reduce.pl
+ input: 10-repeatscmp.txt
+ output: 10-repeatscmp.txt.stats
+ extra: 0
+ conf:  -jobconf mapred.map.tasks=80 -jobconf mapred.reduce.tasks=1
+Compute Stats:	
+  (./stats-map.pl out/10-repeatscmp.txt | sort -S 1G -T /usr/local/scratch/kkrampis/ | ./stats-reduce.pl > out/10-repeatscmp.txt.stats) >& out/10-repeatscmp.txt.stats.err
+ 0 s
+
+Stats 10-repeatscmp.txt
+====================================================================================
+Threshold         Cnt       Sum         Mean       N50    N50Cnt       Deg       Cov
+
+== Total time: repeats 0 s 2 steps
+  Save results to 99-final.txt
+  Save results to 99-final.txt.stats
+== Total time: scaffolding 0 s 0 steps
+Create Fasta
+== Total time: fasta 0 s 0 steps
+Checking graph
+==
+Checked 0 bp in 0 nodes, edges: 0 ok, 0 dup, 0 missing, 0 bad, thread: 0 ok 0 bad
+== Total time: status 0 s 0 steps
+== Stopping time 2012-02-13 11:33:18
+== Total time 2 s 0 steps

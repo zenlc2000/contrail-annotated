@@ -261,14 +261,14 @@ sub hadoop_counter
 ## Sequence Processing
 ###############################################################################
 
-sub rc
+sub rc ## Reverse compliment of the sequence.
 {
   my $sequence = reverse $_[0];
   $sequence =~ tr/GATC/CTAG/;
   return $sequence;
 }
 
-sub canonical
+sub canonical   ## Determine whether forward or reverse of the sequence is lexicographically larger of the two.
 {
   my $seq = $_[0];
   my $rc = rc($seq);
@@ -331,7 +331,7 @@ sub canonical
     }
   }
 
-  sub str2dna
+  sub str2dna   ### Converts sequence to ascii representation.
   {
     my $seq = $_[0];
 
@@ -345,7 +345,7 @@ sub canonical
     return $retval;
   }
 
-  sub dna2str
+  sub dna2str  ### Converts back sequence from its ascii representation.
   {
     my $dna = $_[0];
     my $retval = "";

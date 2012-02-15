@@ -1,0 +1,11 @@
+Marking the graph: 1 nodecnt: 464
+reporter:counter:asm,nodecnt,464
+reporter:counter:asm,markcnt,1
+reporter:counter:asm,locallink,4
+reporter:counter:asm,localcheck,13
+reporter:counter:asm,remotemark,0
+locallink: 4
+localcheck: 13
+remotemark: 0
+reporter:counter:asm,totalnodes,464
+reporter:counter:asm,compressible,4

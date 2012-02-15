@@ -1,0 +1,3 @@
+reporter:counter:asm,potentialbubbles,11
+reporter:counter:asm,bubbles_checked,0
+reporter:counter:asm,bubble_edges_popped,0

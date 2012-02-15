@@ -1,0 +1,5 @@
+reporter:counter:asm,threadible,12
+reporter:counter:asm,xcut,1
+reporter:counter:asm,deadend,2
+reporter:counter:asm,halfdecision,9
+reporter:counter:asm,invalidhalf,0

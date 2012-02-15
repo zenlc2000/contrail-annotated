@@ -3,12 +3,13 @@ use strict;
 use lib ".";
 use PAsm;
 
-
+#nodecnt : number of nodes in the graph.
 my $nodecnt = 0;
 
 # the core representation of the graph structure is essentially the same with build-map.pl
 # what build-reduce.pl and this function below does is to simplify the graph by counting edge degrees
 
+# This function simplifies each node of the graph and calls another function called print_node from PASM module to print it. Each node is printed as key-value pair. The key being the node id. And the value will all the other nodes with which this node shares an edge along with other details. 
 sub simplify_and_print
 {
   #$nodeid represents a set of rows with a specific K-mer we processed and send off
@@ -20,10 +21,10 @@ sub simplify_and_print
 
   $nodecnt++;
 
-  my $seq = dna2str($nodeid);
+  my $seq = dna2str($nodeid);	## converts ascii representation of node to sequence form. The function is called from PASM module.
   my $rc  = rc($seq);
 
-  node_setstr_raw($node, $nodeid);
+  node_setstr_raw($node, $nodeid);  
 
   $seq = substr($seq, 1);
   $rc  = substr($rc,  1);
@@ -60,7 +61,7 @@ sub simplify_and_print
           $v .= $vc;
           $v = rc($v) if ($y eq $rev);
 
-          my $link = str2dna($v);
+          my $link = str2dna($v); ## Stores which other node the given node forms an edge with.
 
           push @vs, $link;
 
@@ -72,7 +73,7 @@ sub simplify_and_print
             }
           }
         }
-
+	## @vs stores all the links to the given nodes.
         $node->{$t} = \@vs;
       }
     }
@@ -98,15 +99,16 @@ while (<>)
   #(remember rows are sorted by K-mer, so we are getting sets of rows with the same K-mer)
   if ((defined $nodeid) && ($curnode ne $nodeid))
   {
-    simplify_and_print($nodeid, $node);
+    simplify_and_print($nodeid, $node);   ## When a new nodeid comes the earlier node (data structure) formed from identical nodeid is send for printing.
     $node = undef;
   }
-
+  ## $curnode stores the current node.
   $nodeid = $curnode;
 
-  #Here we build the core data structure that stores our graph, as a 3-layered hash
-  #{ K-mer -> direction (ff/fr/rf/rr) -> neighbooring k-mer (A/C/G/T) } - { read_id }
-  #                    KEY                                              -   VALUE
+  #Here we build the core data structure that stores our graph, as a 3-layered hash {key->{key->{key->[array of read ids]}}}
+
+  #{ K-mer -> direction (ff/fr/rf/rr) -> neighbooring k-mer (A/C/G/T) } - {[ read_id ]
+
 
   if ($THREADREADS)
   {
@@ -124,7 +126,7 @@ while (<>)
     $node->{$type}->{$neighbor} = 1;
   }
 
-  #see PAsm.pm - we definte a $MERTAG nucleotide. What is the purpose of keeping this ?
+  ## $MERTAG stores the Read id of the earliest reads which threads through that node.
   if ((!defined $node->{$MERTAG}) || ($tag lt $node->{$MERTAG}->[0]))
   {
     $node->{$MERTAG}->[0] = $tag;

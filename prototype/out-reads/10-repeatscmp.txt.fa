@@ -1,0 +1,944 @@
+>BBA len=5 cov=96.00
+AAAAA
+>BBF len=5 cov=59.00
+AAAAC
+>BBK_1 len=5 cov=5.36
+AAAAG
+>BBK_10 len=5 cov=5.36
+AAAAG
+>BBK_11 len=5 cov=5.36
+AAAAG
+>BBK_2 len=5 cov=5.36
+AAAAG
+>BBK_3 len=5 cov=5.36
+AAAAG
+>BBK_4 len=5 cov=5.36
+AAAAG
+>BBK_5 len=5 cov=5.36
+AAAAG
+>BBK_6 len=5 cov=5.36
+AAAAG
+>BBK_7 len=5 cov=5.36
+AAAAG
+>BBK_8 len=5 cov=5.36
+AAAAG
+>BBK_9 len=5 cov=5.36
+AAAAG
+>BBP len=5 cov=94.00
+AAAAT
+>BCA len=5 cov=21.00
+AAACA
+>BCF len=5 cov=66.00
+AAACC
+>BCK len=5 cov=54.00
+AAACG
+>BCP len=5 cov=34.00
+AAACT
+>BDA len=5 cov=41.00
+AAAGA
+>BDF len=5 cov=37.00
+AAAGC
+>BDK len=5 cov=26.00
+AAAGG
+>BDP len=5 cov=33.00
+AAAGT
+>BEA len=5 cov=48.00
+AAATA
+>BEF len=5 cov=61.00
+AAATC
+>BEK len=5 cov=31.00
+AAATG
+>BEP len=5 cov=109.00
+AAATT
+>BGA len=5 cov=32.00
+AACAA
+>BGF len=5 cov=22.00
+AACAC
+>BGK len=5 cov=18.00
+AACAG
+>BGP len=5 cov=14.00
+AACAT
+>BHA len=5 cov=43.00
+AACCA
+>BHF len=5 cov=25.00
+AACCC
+>BHK len=5 cov=53.00
+AACCG
+>BHP len=5 cov=11.00
+AACCT
+>BIA len=5 cov=19.00
+AACGA
+>BIF len=5 cov=31.00
+AACGC
+>BIK len=5 cov=39.00
+AACGG
+>BIP len=5 cov=27.00
+AACGT
+>BJA len=5 cov=9.00
+AACTA
+>BJF len=5 cov=25.00
+AACTC
+>BJK len=5 cov=20.00
+AACTG
+>BJP len=5 cov=41.00
+AACTT
+>BLA len=5 cov=49.00
+AAGAA
+>BLF len=5 cov=17.00
+AAGAC
+>BLK len=5 cov=12.00
+AAGAG
+>BLP len=5 cov=36.00
+AAGAT
+>BMA len=5 cov=29.00
+AAGCA
+>BMF len=5 cov=23.00
+AAGCC
+>BMK len=5 cov=68.00
+AAGCG
+>BMP len=5 cov=21.00
+AAGCT
+>BNA len=5 cov=13.00
+AAGGA
+>BNF len=5 cov=21.00
+AAGGC
+>BNK len=5 cov=17.00
+AAGGG
+>BNP len=5 cov=18.00
+AAGGT
+>BOA len=5 cov=22.00
+AAGTA
+>BOF len=5 cov=17.00
+AAGTC
+>BOK len=5 cov=23.00
+AAGTG
+>BQA len=5 cov=70.00
+AATAA
+>BQF len=5 cov=29.00
+AATAC
+>BQK len=5 cov=13.00
+AATAG
+>BQP len=5 cov=39.00
+AATAT
+>BRA len=5 cov=35.00
+AATCA
+>BRF len=5 cov=28.00
+AATCC
+>BRK len=5 cov=56.00
+AATCG
+>BRP len=5 cov=31.00
+AATCT
+>BSA len=5 cov=23.00
+AATGA
+>BSF len=5 cov=39.00
+AATGC
+>BSK len=5 cov=35.00
+AATGG
+>BSP len=5 cov=17.00
+AATGT
+>BTA len=5 cov=69.00
+AATTA
+>BTF len=5 cov=46.00
+AATTC
+>BTK len=5 cov=39.00
+AATTG
+>CBA len=5 cov=34.00
+ACAAA
+>CBF len=5 cov=16.00
+ACAAC
+>CBK len=5 cov=36.00
+ACAAG
+>CBP len=5 cov=12.00
+ACAAT
+>CCA len=5 cov=20.00
+ACACA
+>CCF len=5 cov=11.00
+ACACC
+>CCK len=5 cov=20.00
+ACACG
+>CCP len=5 cov=14.00
+ACACT
+>CDA len=5 cov=11.00
+ACAGA
+>CDF len=5 cov=14.00
+ACAGC
+>CDK len=5 cov=16.00
+ACAGG
+>CDP len=5 cov=8.00
+ACAGT
+>CEA len=5 cov=9.00
+ACATA
+>CEF len=5 cov=14.00
+ACATC
+>CGA len=5 cov=54.00
+ACCAA
+>CGF len=5 cov=11.00
+ACCAC
+>CGK len=5 cov=16.00
+ACCAG
+>CGP len=5 cov=17.00
+ACCAT
+>CHA len=5 cov=13.00
+ACCCA
+>CHK len=5 cov=23.00
+ACCCG
+>CHP len=5 cov=6.00
+ACCCT
+>CIA len=5 cov=56.00
+ACCGA
+>CIF len=5 cov=46.00
+ACCGC
+>CIK len=5 cov=31.00
+ACCGG
+>CIP len=5 cov=45.00
+ACCGT
+>CJA len=5 cov=8.00
+ACCTA
+>CJK len=5 cov=14.00
+ACCTG
+>CLA len=5 cov=21.00
+ACGAA
+>CLF len=5 cov=13.00
+ACGAC
+>CLK len=5 cov=9.00
+ACGAG
+>CLP len=5 cov=34.00
+ACGAT
+>CMA len=5 cov=31.00
+ACGCA
+>CMF len=5 cov=25.00
+ACGCC
+>CMK len=5 cov=11.00
+ACGCG
+>CMP len=5 cov=33.00
+ACGCT
+>CNA len=5 cov=17.00
+ACGGA
+>CNF len=5 cov=25.00
+ACGGC
+>CNK len=5 cov=14.00
+ACGGG
+>COA len=5 cov=28.00
+ACGTA
+>COF len=5 cov=13.00
+ACGTC
+>COK len=5 cov=21.00
+ACGTG
+>CQA len=5 cov=18.00
+ACTAA
+>CQF len=5 cov=10.00
+ACTAC
+>CQP len=5 cov=12.00
+ACTAT
+>CRA len=5 cov=21.00
+ACTCA
+>CRK len=5 cov=11.00
+ACTCG
+>CRP len=5 cov=13.00
+ACTCT
+>CSA len=5 cov=17.00
+ACTGA
+>CSF len=5 cov=7.00
+ACTGC
+>CSK len=5 cov=12.00
+ACTGG
+>CTA len=5 cov=21.00
+ACTTA
+>CTF len=5 cov=25.00
+ACTTC
+>CTK len=5 cov=24.00
+ACTTG
+>DBA len=5 cov=46.00
+AGAAA
+>DBF len=5 cov=16.00
+AGAAC
+>DBK len=5 cov=24.00
+AGAAG
+>DBP len=5 cov=27.00
+AGAAT
+>DCA len=5 cov=10.00
+AGACA
+>DCF len=5 cov=9.00
+AGACC
+>DCK len=5 cov=15.00
+AGACG
+>DCP len=5 cov=7.00
+AGACT
+>DDA len=5 cov=12.00
+AGAGA
+>DDF len=5 cov=8.00
+AGAGC
+>DEA len=5 cov=16.00
+AGATA
+>DEF len=5 cov=22.00
+AGATC
+>DGA len=5 cov=23.00
+AGCAA
+>DGF len=5 cov=9.00
+AGCAC
+>DGK len=5 cov=9.00
+AGCAG
+>DGP len=5 cov=17.00
+AGCAT
+>DHA len=5 cov=15.00
+AGCCA
+>DHF len=5 cov=8.00
+AGCCC
+>DHK len=5 cov=18.00
+AGCCG
+>DIA len=5 cov=27.00
+AGCGA
+>DIK len=5 cov=43.00
+AGCGG
+>DJA len=5 cov=17.00
+AGCTA
+>DJF len=5 cov=6.00
+AGCTC
+>DJK len=5 cov=15.00
+AGCTG
+>DLA len=5 cov=15.00
+AGGAA
+>DLP len=5 cov=13.00
+AGGAT
+>DMA len=5 cov=11.00
+AGGCA
+>DMK len=5 cov=19.00
+AGGCG
+>DNA len=5 cov=8.00
+AGGGA
+>DNF len=5 cov=7.00
+AGGGC
+>DOA len=5 cov=23.00
+AGGTA
+>DOK len=5 cov=8.00
+AGGTG
+>DQA len=5 cov=28.00
+AGTAA
+>DQF len=5 cov=9.00
+AGTAC
+>DQK len=5 cov=10.00
+AGTAG
+>DRA len=5 cov=13.00
+AGTCA
+>DRF len=5 cov=6.00
+AGTCC
+>DRK len=5 cov=11.00
+AGTCG
+>DSA len=5 cov=19.00
+AGTGA
+>DSK len=5 cov=15.00
+AGTGG
+>DTA len=5 cov=26.00
+AGTTA
+>DTF len=5 cov=19.00
+AGTTC
+>DTK len=5 cov=16.00
+AGTTG
+>EBA len=5 cov=61.00
+ATAAA
+>EBF len=5 cov=35.00
+ATAAC
+>EBK len=5 cov=19.00
+ATAAG
+>EBP len=5 cov=50.00
+ATAAT
+>ECA len=5 cov=10.00
+ATACA
+>ECF len=5 cov=27.00
+ATACC
+>ECK len=5 cov=28.00
+ATACG
+>EDA len=5 cov=11.00
+ATAGA
+>EDF len=5 cov=9.00
+ATAGC
+>EDK len=5 cov=6.00
+ATAGG
+>EEA len=5 cov=6.00
+ATATA
+>EEF len=5 cov=19.00
+ATATC
+>EEK len=5 cov=22.00
+ATATG
+>EGA len=5 cov=31.00
+ATCAA
+>EGF len=5 cov=27.00
+ATCAC
+>EGK len=5 cov=23.00
+ATCAG
+>EGP len=5 cov=20.00
+ATCAT
+>EHA len=5 cov=22.00
+ATCCA
+>EHF len=5 cov=14.00
+ATCCC
+>EHK len=5 cov=28.00
+ATCCG
+>EIA len=5 cov=33.00
+ATCGA
+>EIF len=5 cov=26.00
+ATCGC
+>EIK len=5 cov=40.00
+ATCGG
+>EJA len=5 cov=9.00
+ATCTA
+>EJF len=5 cov=15.00
+ATCTC
+>EJK len=5 cov=14.00
+ATCTG
+>ELA len=5 cov=23.00
+ATGAA
+>ELF len=5 cov=22.00
+ATGAC
+>EMA len=5 cov=23.00
+ATGCA
+>EMF len=5 cov=21.00
+ATGCC
+>EMK len=5 cov=28.00
+ATGCG
+>ENA len=5 cov=19.00
+ATGGA
+>ENF len=5 cov=20.00
+ATGGC
+>ENK len=5 cov=14.00
+ATGGG
+>EOA len=5 cov=7.00
+ATGTA
+>EOK len=5 cov=18.00
+ATGTG
+>EQA len=5 cov=73.00
+ATTAA
+>EQF len=5 cov=35.00
+ATTAC
+>EQK len=5 cov=18.00
+ATTAG
+>ERA len=5 cov=27.00
+ATTCA
+>ERF len=5 cov=19.00
+ATTCC
+>ERK len=5 cov=44.00
+ATTCG
+>ESA len=5 cov=36.00
+ATTGA
+>ESF len=5 cov=39.00
+ATTGC
+>ESK len=5 cov=44.00
+ATTGG
+>ETA len=5 cov=71.00
+ATTTA
+>ETF len=5 cov=41.00
+ATTTC
+>ETK len=5 cov=43.00
+ATTTG
+>GBA len=5 cov=64.00
+CAAAA
+>GBF len=5 cov=27.00
+CAAAC
+>GBK len=5 cov=24.00
+CAAAG
+>GCA len=5 cov=28.00
+CAACA
+>GCF len=5 cov=16.00
+CAACC
+>GCK len=5 cov=16.00
+CAACG
+>GDA len=5 cov=29.00
+CAAGA
+>GDF len=5 cov=41.00
+CAAGC
+>GDK len=5 cov=25.00
+CAAGG
+>GEA len=5 cov=32.00
+CAATA
+>GEF len=5 cov=37.00
+CAATC
+>GEK len=5 cov=23.00
+CAATG
+>GGA len=5 cov=21.00
+CACAA
+>GGF len=5 cov=14.00
+CACAC
+>GGK len=5 cov=16.00
+CACAG
+>GHA len=5 cov=14.00
+CACCA
+>GHF len=5 cov=9.00
+CACCC
+>GHK len=5 cov=31.00
+CACCG
+>GIA len=5 cov=12.00
+CACGA
+>GIF len=5 cov=29.00
+CACGC
+>GIK len=5 cov=18.00
+CACGG
+>GJA len=5 cov=12.00
+CACTA
+>GJF len=5 cov=11.00
+CACTC
+>GJK len=5 cov=6.00
+CACTG
+>GLA len=5 cov=19.00
+CAGAA
+>GLF len=5 cov=10.00
+CAGAC
+>GMA len=5 cov=12.00
+CAGCA
+>GMF len=5 cov=7.00
+CAGCC
+>GMK len=5 cov=7.00
+CAGCG
+>GNA len=5 cov=12.00
+CAGGA
+>GOA len=5 cov=12.00
+CAGTA
+>GOF len=5 cov=6.00
+CAGTC
+>GQA len=5 cov=27.00
+CATAA
+>GQF len=5 cov=13.00
+CATAC
+>GQK len=5 cov=7.00
+CATAG
+>GRA len=5 cov=25.00
+CATCA
+>GRF len=5 cov=11.00
+CATCC
+>GRK len=5 cov=20.00
+CATCG
+>GSA len=5 cov=6.00
+CATGA
+>GSK len=5 cov=10.00
+CATGG
+>GTA len=5 cov=39.00
+CATTA
+>GTF len=5 cov=19.00
+CATTC
+>HBA len=5 cov=42.00
+CCAAA
+>HBF len=5 cov=21.00
+CCAAC
+>HBK len=5 cov=28.00
+CCAAG
+>HCA len=5 cov=11.00
+CCACA
+>HCF len=5 cov=12.00
+CCACC
+>HCK len=5 cov=16.00
+CCACG
+>HDA len=5 cov=13.00
+CCAGA
+>HDF len=5 cov=7.00
+CCAGC
+>HEA len=5 cov=18.00
+CCATA
+>HEF len=5 cov=6.00
+CCATC
+>HGA len=5 cov=16.00
+CCCAA
+>HGK len=5 cov=6.00
+CCCAG
+>HHA len=6 cov=8.50
+ACCCCA
+>HIA len=5 cov=19.00
+CCCGA
+>HIF len=5 cov=9.00
+CCCGC
+>HIK len=5 cov=8.00
+CCCGG
+>HJA len=5 cov=6.00
+CCCTA
+>HLA len=5 cov=53.00
+CCGAA
+>HLF len=5 cov=23.00
+CCGAC
+>HLK len=5 cov=9.00
+CCGAG
+>HMA len=5 cov=32.00
+CCGCA
+>HMF len=5 cov=29.00
+CCGCC
+>HMK len=5 cov=6.00
+CCGCG
+>HNA len=5 cov=26.00
+CCGGA
+>HNF len=5 cov=27.00
+CCGGC
+>HOA len=5 cov=20.00
+CCGTA
+>HOF len=5 cov=23.00
+CCGTC
+>HQA len=5 cov=15.00
+CCTAA
+>HQF len=5 cov=8.00
+CCTAC
+>HRK len=5 cov=6.00
+CCTCG
+>HSA len=5 cov=10.00
+CCTGA
+>HSF len=5 cov=7.00
+CCTGC
+>HTA len=5 cov=6.00
+CCTTA
+>HTF len=5 cov=12.00
+CCTTC
+>IBA len=5 cov=41.00
+CGAAA
+>IBF len=5 cov=29.00
+CGAAC
+>IBK len=5 cov=21.00
+CGAAG
+>ICA len=5 cov=12.00
+CGACA
+>ICF len=5 cov=20.00
+CGACC
+>ICK len=5 cov=15.00
+CGACG
+>IDA len=5 cov=15.00
+CGAGA
+>IDF len=5 cov=13.00
+CGAGC
+>IEA len=5 cov=36.00
+CGATA
+>IEF len=5 cov=22.00
+CGATC
+>IGA len=5 cov=35.00
+CGCAA
+>IGF len=5 cov=31.00
+CGCAC
+>IHA len=5 cov=36.00
+CGCCA
+>IHF len=5 cov=15.00
+CGCCC
+>IHK len=5 cov=35.00
+CGCCG
+>IIA len=5 cov=10.00
+CGCGA
+>IJA len=5 cov=14.00
+CGCTA
+>IJF len=5 cov=20.00
+CGCTC
+>ILA len=5 cov=50.00
+CGGAA
+>ILF len=5 cov=15.00
+CGGAC
+>IMA len=5 cov=45.00
+CGGCA
+>INA len=5 cov=11.00
+CGGGA
+>INF len=5 cov=14.00
+CGGGC
+>IOA len=5 cov=60.00
+CGGTA
+>IOF len=5 cov=34.00
+CGGTC
+>IQA len=5 cov=46.00
+CGTAA
+>IQF len=5 cov=29.00
+CGTAC
+>IQK len=5 cov=9.00
+CGTAG
+>IRA len=5 cov=18.00
+CGTCA
+>IRF len=5 cov=9.00
+CGTCC
+>ISA len=5 cov=25.00
+CGTGA
+>ISF len=5 cov=19.00
+CGTGC
+>ITA len=5 cov=19.00
+CGTTA
+>ITF len=5 cov=26.00
+CGTTC
+>JBA len=5 cov=36.00
+CTAAA
+>JBF len=5 cov=11.00
+CTAAC
+>JBK len=5 cov=12.00
+CTAAG
+>JCA len=5 cov=8.00
+CTACA
+>JCF len=5 cov=14.00
+CTACC
+>JDF len=5 cov=6.00
+CTAGC
+>JEA len=5 cov=11.00
+CTATA
+>JEF len=5 cov=7.00
+CTATC
+>JGA len=5 cov=30.00
+CTCAA
+>JGF len=5 cov=17.00
+CTCAC
+>JHA len=5 cov=12.00
+CTCCA
+>JIA len=5 cov=12.00
+CTCGA
+>JIF len=5 cov=15.00
+CTCGC
+>JJA len=5 cov=9.00
+CTCTA
+>JJF len=5 cov=9.00
+CTCTC
+>JLA len=5 cov=12.00
+CTGAA
+>JLF len=5 cov=9.00
+CTGAC
+>JMA len=5 cov=10.00
+CTGCA
+>JMF len=5 cov=12.00
+CTGCC
+>JNA len=5 cov=8.00
+CTGGA
+>JOA len=5 cov=8.00
+CTGTA
+>JOF len=5 cov=7.00
+CTGTC
+>JQA len=5 cov=27.00
+CTTAA
+>JQF len=5 cov=17.00
+CTTAC
+>JRA len=5 cov=17.00
+CTTCA
+>JRF len=5 cov=36.00
+CTTCC
+>JSA len=5 cov=23.00
+CTTGA
+>JSF len=5 cov=32.00
+CTTGC
+>JTA len=5 cov=29.00
+CTTTA
+>JTF len=5 cov=25.00
+CTTTC
+>LBA len=5 cov=66.00
+GAAAA
+>LBF len=5 cov=30.00
+GAAAC
+>LCA len=5 cov=19.00
+GAACA
+>LCF len=5 cov=10.00
+GAACC
+>LDA len=5 cov=34.00
+GAAGA
+>LDF len=5 cov=27.00
+GAAGC
+>LEA len=5 cov=37.00
+GAATA
+>LEF len=5 cov=15.00
+GAATC
+>LGA len=5 cov=15.00
+GACAA
+>LGF len=5 cov=8.00
+GACAC
+>LHA len=5 cov=12.00
+GACCA
+>LHF len=5 cov=6.00
+GACCC
+>LIA len=5 cov=9.00
+GACGA
+>LIF len=5 cov=12.00
+GACGC
+>LJA len=5 cov=10.00
+GACTA
+>LLA len=5 cov=22.00
+GAGAA
+>LMA len=5 cov=11.00
+GAGCA
+>LMF len=5 cov=8.00
+GAGCC
+>LOA len=5 cov=9.00
+GAGTA
+>LQA len=5 cov=49.00
+GATAA
+>LQF len=5 cov=15.00
+GATAC
+>LRA len=5 cov=25.00
+GATCA
+>LRF len=5 cov=16.00
+GATCC
+>LSA len=5 cov=25.00
+GATGA
+>LSF len=5 cov=17.00
+GATGC
+>LTA len=5 cov=37.00
+GATTA
+>MBA len=5 cov=43.00
+GCAAA
+>MBF len=5 cov=26.00
+GCAAC
+>MCA len=5 cov=15.00
+GCACA
+>MCF len=5 cov=25.00
+GCACC
+>MDA len=5 cov=9.00
+GCAGA
+>MDF len=5 cov=12.00
+GCAGC
+>MEA len=5 cov=27.00
+GCATA
+>MGA len=5 cov=31.00
+GCCAA
+>MGF len=5 cov=21.00
+GCCAC
+>MHA len=5 cov=12.00
+GCCCA
+>MIA len=5 cov=28.00
+GCCGA
+>MIF len=5 cov=21.00
+GCCGC
+>MJA len=5 cov=8.00
+GCCTA
+>MLA len=5 cov=35.00
+GCGAA
+>MLF len=5 cov=13.00
+GCGAC
+>MMA len=6 cov=15.50
+GGCGCA
+>MNA len=5 cov=34.00
+GCGGA
+>MOA len=5 cov=28.00
+GCGTA
+>MQA len=5 cov=19.00
+GCTAA
+>MQF len=5 cov=10.00
+GCTAC
+>MRA len=5 cov=16.00
+GCTCA
+>MRF len=5 cov=8.00
+GCTCC
+>MSA len=5 cov=8.00
+GCTGA
+>MTA len=5 cov=37.00
+GCTTA
+>NBA len=5 cov=39.00
+GGAAA
+>NBF len=5 cov=13.00
+GGAAC
+>NCF len=5 cov=9.00
+GGACC
+>NDA len=5 cov=8.00
+GGAGA
+>NEA len=5 cov=21.00
+GGATA
+>NGA len=5 cov=46.00
+GGCAA
+>NGF len=5 cov=9.00
+GGCAC
+>NIA len=5 cov=34.00
+GGCGA
+>NJA len=5 cov=7.00
+GGCTA
+>NLA len=5 cov=10.00
+GGGAA
+>NMA len=5 cov=13.00
+GGGCA
+>NOA len=5 cov=10.00
+GGGTA
+>NQA len=5 cov=44.00
+GGTAA
+>NQF len=5 cov=38.00
+GGTAC
+>NRA len=5 cov=19.00
+GGTCA
+>NSA len=5 cov=14.00
+GGTGA
+>NTA len=5 cov=41.00
+GGTTA
+>OBA len=5 cov=66.00
+GTAAA
+>OBF len=5 cov=21.00
+GTAAC
+>OCA len=5 cov=24.00
+GTACA
+>ODA len=5 cov=13.00
+GTAGA
+>OEA len=5 cov=12.00
+GTATA
+>OGA len=5 cov=16.00
+GTCAA
+>OGF len=5 cov=9.00
+GTCAC
+>OHA len=5 cov=9.00
+GTCCA
+>OIA len=5 cov=8.00
+GTCGA
+>OJA len=5 cov=10.00
+GTCTA
+>OLA len=5 cov=27.00
+GTGAA
+>OMA len=5 cov=14.00
+GTGCA
+>ONA len=5 cov=17.00
+GTGGA
+>OOA len=5 cov=20.00
+GTGTA
+>OQA len=5 cov=36.00
+GTTAA
+>ORA len=5 cov=16.00
+GTTCA
+>OSA len=5 cov=13.00
+GTTGA
+>OTA len=5 cov=57.00
+GTTTA
+>QBA len=5 cov=81.00
+TAAAA
+>QCA len=5 cov=18.00
+TAACA
+>QDA len=5 cov=10.00
+TAAGA
+>QEA len=5 cov=35.00
+TAATA
+>QGA len=5 cov=29.00
+TACAA
+>QHA len=5 cov=30.00
+TACCA
+>QIA len=5 cov=37.00
+TACGA
+>QJA len=5 cov=9.00
+TACTA
+>QLA len=5 cov=23.00
+TAGAA
+>QMA len=5 cov=6.00
+TAGCA
+>QNA len=5 cov=7.00
+TAGGA
+>QQA len=5 cov=18.00
+TATAA
+>QRA len=5 cov=16.00
+TATCA
+>QSA len=5 cov=14.00
+TATGA
+>RBA len=5 cov=40.00
+TCAAA
+>RCA len=5 cov=22.00
+TCACA
+>RDA len=5 cov=14.00
+TCAGA
+>RGA len=5 cov=33.00
+TCCAA
+>RHA len=5 cov=6.00
+TCCCA
+>RIA len=5 cov=21.00
+TCCGA
+>RLA len=5 cov=27.00
+TCGAA
+>RMA len=5 cov=17.00
+TCGCA
+>RQA len=5 cov=23.00
+TCTAA
+>RRA len=5 cov=15.00
+TCTCA
+>SBA len=5 cov=38.00
+TGAAA
+>SGA len=5 cov=37.00
+TGCAA
+>SHA len=5 cov=20.00
+TGCCA
+>SLA len=5 cov=33.00
+TGGAA
+>SQA len=5 cov=21.00
+TGTAA
+>TBA len=5 cov=75.00
+TTAAA
+>TGA len=5 cov=36.00
+TTCAA

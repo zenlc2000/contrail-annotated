@@ -1,0 +1,5 @@
+Removing tips <= 10 bp
+reporter:counter:asm,tipsremoved,0
+reporter:counter:asm,removed_threads,0
+reporter:counter:asm,removed_links,0
+reporter:counter:asm,tips_kept,0

@@ -1,0 +1,5 @@
+reporter:counter:asm,allneedsplit,0
+reporter:counter:asm,resolved,0
+reporter:counter:asm,needsplit,0
+reporter:counter:asm,uniquethreadedbp,0
+reporter:counter:asm,totalthreadedbp,0

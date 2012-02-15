@@ -1,0 +1,3 @@
+reporter:counter:asm,bubblespopped,0
+reporter:counter:asm,removed_threads,0
+reporter:counter:asm,removed_links,0

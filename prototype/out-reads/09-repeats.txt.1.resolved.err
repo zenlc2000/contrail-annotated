@@ -1,0 +1,18 @@
+Selecting master for BBK X
+Resolving BBK
+BBK_1 ff:BDP-rr:QBA : Read484,Read23,Read2254
+BBK_2 ff:BDP-rr:BBA : Read4432
+BBK_3 ff:BDF-rr:BBA : Read3574,Read4354,Read36
+BBK_4 ff:BDK-rr:QBA : Read34,Read334
+BBK_5 ff:BDK-rr:BBA : Read20,Read1946,Read8,Read744,Read2924
+BBK_6 ff:BDA-rr:GBA : Read4
+BBK_7 ff:BDF-rr:QBA : Read374,Read3360,Read3910,Read2112,Read6,Read550
+BBK_8 ff:BDA-rr:QBA : Read52,Read310,Read96
+BBK_9 ff:BDP-rr:GBA : Read4452,Read3812,Read5310,Read3770,Read426
+BBK_10 ff:BDK-rr:GBA : Read274
+BBK_11 ff:BDA-rr:BBA : Read464,Read28,Read32,Read2,Read4112,Read3140,Read3844
+reporter:counter:asm,allneedsplit,1
+reporter:counter:asm,resolved,1
+reporter:counter:asm,needsplit,0
+reporter:counter:asm,uniquethreadedbp,1
+reporter:counter:asm,totalthreadedbp,11

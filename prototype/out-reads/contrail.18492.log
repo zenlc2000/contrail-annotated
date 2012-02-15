@@ -1,0 +1,125 @@
+Running: contrail.pl -reads /home/pkumari/priti/tests/samplereads/Reads -work out1 5 -start initial
+
+== Starting time 2012-02-13 18:22:02
+Preprocess:	 0 s  54 (100.00%) good reads, 11003 bp
+Build Initial:	 0 s  508 nodes
+  Quick Merge:	 0 s  0 saved
+  Compressible:	 0 s  0 compressible
+  Save results to 02-initialcmp.txt
+
+Compute Stats:	 0 s
+
+Stats 02-initialcmp.txt
+====================================================================================
+Threshold         Cnt       Sum         Mean       N50    N50Cnt       Deg       Cov
+>1                508      2540         5.00         0         0      6.87     21.23
+
+== Total time: initial 1 s 5 steps
+Remove Tips 1:	 1 s  0 tips removed, 0 remaining
+  Save results to 04-notipscmp.txt
+
+Compute Stats:	 0 s
+
+Stats 04-notipscmp.txt
+====================================================================================
+Threshold         Cnt       Sum         Mean       N50    N50Cnt       Deg       Cov
+>1                508      2540         5.00         0         0      6.87     21.23
+
+== Total time: removetips 1 s 2 steps
+Find Bubbles 1:	 0 s  13 potential bubbles
+  Pop 1:	 0 s  0 bubbles popped
+  Save results to 06-nobubblescmp.txt
+
+Compute Stats:	 0 s
+
+Stats 06-nobubblescmp.txt
+====================================================================================
+Threshold         Cnt       Sum         Mean       N50    N50Cnt       Deg       Cov
+>1                508      2540         5.00         0         0      6.87     21.23
+
+== Total time: popbubbles 0 s 3 steps
+Remove Low Coverage:	 0 s  44 low coverage nodes removed
+  Compressible:	 1 s  4 compressible
+  QMark  1:	 0 s  16 marked
+  QMerge 1:	 0 s  0 remaining (-100.00%)
+  Save results to 07-lowcov.txt.c
+
+Remove Tips 1:	 0 s  0 tips removed, 0 remaining
+  Save results to 07-lowcov.txt.tc
+
+Find Bubbles 1:	 0 s  0 potential bubbles
+  Pop 1:	 0 s  0 bubbles popped
+  Save results to 08-lowcovcmp.txt
+
+Compute Stats:	 0 s
+
+Stats 08-lowcovcmp.txt
+====================================================================================
+Threshold         Cnt       Sum         Mean       N50    N50Cnt       Deg       Cov
+>1                462      2312         5.00         0         0      6.92     22.99
+
+== Total time: lowcov 2 s 8 steps
+Thread Repeats 1:	 0 s  12 threadible (1 xcut, 9 half, 2 deadend)
+  Threadible 1:	 0 s  1 threaded nodes
+  Resolve 1:	 0 s  0 remaining
+  Compressible:	 1 s  0 compressible
+  Save results to 09-repeats.txt.1.cmp
+
+Remove Tips 1:	 0 s  0 tips removed, 0 remaining
+  Save results to 09-repeats.txt.1.tipsfin
+
+Find Bubbles 1:	 0 s  11 potential bubbles
+  Pop 1:	 0 s  0 bubbles popped
+  Save results to 09-repeats.txt.1.popfin
+
+Compute Stats:	 0 s
+
+Stats 09-repeats.txt.1.popfin
+====================================================================================
+Threshold         Cnt       Sum         Mean       N50    N50Cnt       Deg       Cov
+>1                472      2362         5.00         0         0      6.84     22.50
+
+
+Thread Repeats 2:	 1 s  11 threadible (0 xcut, 9 half, 2 deadend)
+  Threadible 2:	 0 s  0 threaded nodes
+  Resolve 2:	 0 s  0 remaining
+  Compressible:	 1 s  0 compressible
+  Save results to 09-repeats.txt.2.cmp
+
+Remove Tips 1:	 0 s  0 tips removed, 0 remaining
+  Save results to 09-repeats.txt.2.tipsfin
+
+Find Bubbles 1:	 0 s  11 potential bubbles
+  Pop 1:	 0 s  0 bubbles popped
+  Save results to 09-repeats.txt.2.popfin
+
+Compute Stats:	 0 s
+
+Stats 09-repeats.txt.2.popfin
+====================================================================================
+Threshold         Cnt       Sum         Mean       N50    N50Cnt       Deg       Cov
+>1                472      2362         5.00         0         0      6.84     22.50
+
+
+  Save results to 10-repeatscmp.txt
+
+Create fasta
+Compute Stats:	 0 s
+
+Stats 10-repeatscmp.txt
+====================================================================================
+Threshold         Cnt       Sum         Mean       N50    N50Cnt       Deg       Cov
+>1                472      2362         5.00         0         0      6.84     22.50
+
+== Total time: repeats 4 s 17 steps
+  Save results to 99-final.txt
+  Save results to 99-final.txt.stats
+== Total time: scaffolding 0 s 0 steps
+Create Fasta
+== Total time: fasta 0 s 0 steps
+Checking graph
+==
+Checked 2362 bp in 472 nodes, edges: 3228 ok, 0 dup, 0 missing, 0 bad, thread: 24979 ok 0 bad
+== Total time: status 0 s 0 steps
+== Stopping time 2012-02-13 18:22:10
+== Total time 8 s 0 steps

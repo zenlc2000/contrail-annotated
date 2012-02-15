@@ -1,0 +1,5 @@
+DA	N	*s	DA	*v	2.00	*fr	JF	EA	*rf	JF	*rr	GK	*cf	0	*cr	0	*d	fr:EA:Read2	fr:JF:Read4	rf:JF:Read2	rr:GK:Read4
+CA	N	*s	RCA	*v	1.33	*rr	EA	*cf	0	*cr	0	*5	Read3:0
+EA	N	*s	EDR	*v	1.50	*ff	CA	*fr	DA	*cf	0	*cr	0	*d	ff:CA:Read5	fr:DA:Read2	*5	Read2:3	Read5:2	Read1:0
+GK	N	*s	GK	*v	1.00	*ff	DA	*cf	0	*cr	0	*5	Read4:0
+JF	N	*s	JF	*v	2.00	*fr	DA	*rf	DA	*cf	0	*cr	0

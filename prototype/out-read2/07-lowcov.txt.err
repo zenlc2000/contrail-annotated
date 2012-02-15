@@ -1,0 +1,4 @@
+Removing nodes <= 6 bp with cov <= 5
+reporter:counter:asm,lowcovremoved,1
+reporter:counter:asm,removed_threads,0
+reporter:counter:asm,removed_links,0

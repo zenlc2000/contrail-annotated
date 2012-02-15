@@ -1,0 +1,10 @@
+CA	N	*s	CA	*v	1.00	*rr	GF	*t	Read3
+CP	N	*s	CP	*v	2.00	*ff	JA	*rr	LF	*t	Read1	*5	~Read5:2
+DA	N	*s	DA	*v	2.00	*ff	LF	*fr	JF	*rf	JF	*rr	GK	*t	Read2	*d	ff:LF:Read2	fr:JF:Read4	rf:JF:Read2	rr:GK:Read4
+EA	N	*s	EA	*v	1.00	*fr	JA	*t	Read1	*5	Read1:0
+GF	N	*s	GF	*v	1.00	*ff	CA	*rr	RA	*t	Read3
+GK	N	*s	GK	*v	1.00	*ff	DA	*t	Read4	*5	Read4:0
+JA	N	*s	JA	*v	1.00	*fr	EA	*rr	CP	*t	Read1
+JF	N	*s	JF	*v	2.00	*fr	DA	*rf	DA	*t	Read2
+LF	N	*s	LF	*v	2.00	*ff	CP	*rf	RA	*rr	DA	*t	Read2	*d	rf:RA:Read5	rr:DA:Read2	*5	~Read2:2
+RA	N	*s	RA	*v	2.00	*ff	GF	*rf	LF	*t	Read3	*5	Read3:0
