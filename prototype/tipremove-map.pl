@@ -13,7 +13,9 @@ while (<>)
   chomp;
 
   my $node = {};
-
+  
+  #see build-reduce.pl for reference to the key-value pair here
+  #is the only tab between the key-value pair, or among elements of the value too?
   my @vals = split /\t/, $_;
 
   my $nodeid = shift @vals;
@@ -22,6 +24,7 @@ while (<>)
 
   if ($msgtype eq $NODEMSG)
   {
+    #sends only the value and not the key to this function
     parse_node($node, \@vals);
   }
   else

@@ -604,6 +604,7 @@ sub runLocal
 
   my $start = time;
 
+  print"\n\n$cmd\n\n";
   my $rc = system($cmd);
 
   my $end = time;
