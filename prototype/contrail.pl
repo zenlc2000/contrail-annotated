@@ -1355,6 +1355,8 @@ if (hasStarted("initial"))
 
   if($USE_HADOOP || $SPLIT)
   {
+    #notice that only the map is run here and the sorted (by K-mer) lines are
+    #saved to disk on the "basic.txt-prep" file
     my $prep = "$basic-prep";
     my $jobid = runStep("Preprocess", 
                         "build-map.pl", "", 
@@ -1372,6 +1374,7 @@ if (hasStarted("initial"))
 
     msg "  $reads_good ($frac_reads%) good reads, $reads_goodbp bp\n";
 
+    #here only the reduce is written and the sorted lines are read from the "basic.txt-prep"
     $jobid = runStep("Build Initial", 
                      "cat", "build-reduce.pl", 
                      $prep, $basic, 22);
@@ -1381,6 +1384,9 @@ if (hasStarted("initial"))
   }
   else
   {
+    #this runs the job locally (no Hadoop) - notice that the map output is 
+    #passed to the reduce without the intermediate step that save the graph
+    #to disk (the Schimmy trick) as in the case of running in Hadoop above
     my $jobid = runStep("Preprocess", 
                         "build-map.pl", "build-reduce.pl", 
                         $READS, $basic, 23);
@@ -1424,6 +1430,7 @@ if (hasStarted("initial"))
 ##############################################################################
 if (hasStarted("removetips"))
 {
+    #notice how he uses the $notipscmp in many different map / reduce steps - Schimmy trick
   removetips($initialcmp, $notips, $notipscmp);
   computestats($notipscmp);
   checkDone("removetips");
