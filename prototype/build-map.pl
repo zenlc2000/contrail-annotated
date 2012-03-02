@@ -183,4 +183,4 @@ hadoop_counter("reads_skipped", $skippedreads);
 hadoop_counter("reads_short",   $shortreads);
 hadoop_counter("reads_good",    $goodreads);
 hadoop_counter("reads_goodbp",  $goodbp);
-hadoop_counter("reads_files",   1);
+

@@ -430,6 +430,9 @@ sub getrand
 ## Node methods
 ###############################################################################
 
+#notice the field separators printed in the different cases below ("*s" = $COVERAGE global variable etc)
+#see "#message types" global variable at the beginning of PAsm.pm
+
 sub print_node
 {
   my $nodeid = shift;
@@ -440,12 +443,16 @@ sub print_node
 
   if ($tagfirst)
   {
+    # $MERTAG is just a flag to tell the subroutine to print the K-MER
     my $tag = $node->{$MERTAG}->[0];
     $node->{$MERTAG} = undef;
 
     print "$tag\t";
   }
 
+  
+  # see message types above - specifies what kind of graph we are reading from the file
+  # for example when we have a graph node we use "N" 
   print "$nodeid\t$NODEMSG";
   
   if (defined $node->{$STR})

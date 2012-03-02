@@ -54,8 +54,10 @@ sub simplify_and_print
       {
         my @vs;
 
+        # $vc are the neighboor nucleotides over the graph link
         foreach my $vc (keys %{$node->{$t}})
         {
+          #attach attibute to $seq (the : operator) its reverse-complement if the first direction of the node is forward
           my $v = ($x eq $fwd) ? $seq : $rc;
 
           $v .= $vc;
@@ -65,6 +67,7 @@ sub simplify_and_print
 
           push @vs, $link;
 
+          # last column in 00-basic.txt with "edge direction:K-MER:read_id"
           if ($THREADREADS && ($degree > 1))
           {
             foreach my $r (@{$node->{$t}->{$vc}})
@@ -116,6 +119,7 @@ while (<>)
     if ((!defined $node->{$type}->{$neighbor}) ||
         (scalar @{$node->{$type}->{$neighbor}} < $MAXTHREADREADS))
     {
+      #three level hash with array as value
       push @{$node->{$type}->{$neighbor}}, $tag;
     }
   }
