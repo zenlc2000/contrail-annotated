@@ -36,24 +36,26 @@ while(<>)
     ## Parse fastq
     $tag = $1;
     $seq = <>;
-
+    
     my $h2 = <>;
     my $qual = <>;
   }
   elsif (/^>(\S+)/)
   {
-    ## Parse (1-line) fasta
+    
     $tag = $1;
     $seq = <>;
+    
   }
   elsif (/^(\S+)\t(\S+)/)
   {
+    ## Parse (1-line) fasta
     $tag = $1;
     $seq = $2;
   }
   else
   {
-    die "Invalid file format expected > or @ saw $_\n";
+    #die "Invalid file format expected > or @ saw $_\n";
   }
 
   chomp($seq);
