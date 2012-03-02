@@ -51,16 +51,22 @@ sub find_tails
       $canCompress = 0;
 
       my ($nextid, $nextdir) = node_gettail($curnode, $curdir);
-
+      
+      #print "curid=$curid, curdir=$curdir\n";	
+      #print "nextid=$nextid, nextdir=$nextdir\n";
+      	
       if ((defined $nextid) && 
           (exists $nodes{$nextid}) &&
           (!exists $seen{$nextid}))
       {
+        
         $seen{$nextid} = 1;
 
         $curnode = $nodes{$nextid};
-        my ($nt, $nd) = node_gettail($curnode, flip_dir($nextdir));
-
+        my ($nt, $nd) = node_gettail($curnode, flip_dir($nextdir)); ## Node1->Node2->Node3 .for a given node Node1 if there exist an edge with a single    
+                                                                    ## node (Node 2 in this case) then the subroutine returns Node2 and edge direction(f/r). 
+        							    ## If Node1 forms egdes with more than one node subroutines return undef.
+        #print "\tnt=$nt, nd=$nd\n";
         #print STDERR "$curid ($curdir) -> $nextid ($nextdir): "; 
         
         if ((defined $nt) && ($nt eq $curid))
@@ -73,7 +79,8 @@ sub find_tails
         }
       }
     } while ($canCompress);
-
+    #print "startdir=$startdir\n";
+    
     if ($startdir eq "r")
     {
       $rtail = $curid;
@@ -87,9 +94,9 @@ sub find_tails
       $fdist = $dist;
     }
   }
-
+  #print "$rtail,$rdir,$rdist,$ftail,$fdir,$fdist\n";
   return ($rtail, $rdir, $rdist,
-          $ftail, $fdir, $fdist);
+          $ftail, $fdir, $fdist); ## for local merge
 }
 
 
@@ -105,7 +112,8 @@ sub localmerge
     next if exists $node->{DONE};
 
     my ($rtail, $rdir, $rdist, 
-        $ftail, $fdir, $fdist) = find_tails($nodeid);
+        $ftail, $fdir, $fdist) = find_tails($nodeid); ##this subroutine finds two nodes(ftail and rtail). All the nodes starting from rtail moving back to
+                                                      ## ftail node are compressed(merged).
 
     $node->{DONE} = 1;
 
@@ -470,6 +478,12 @@ my $lasttag = "";
 
 my $nodecnt = 0;
 
+##nodes are emited from the quickmerge-map.pl with Read id as key and node details as value. It is sorted and send to quickmerge-reduce.pl for local merging
+#of the nodes.example: ATA->TAG->AGC->GCC
+#                                   ->GCA
+# will be compressed to: ATA->TAGC->GCC
+#                                 ->GCA
+
 while (<>)
 {
   if ($V) { print STDERR "==> $_"; }
@@ -491,7 +505,7 @@ while (<>)
   {
     die "Unknown msg: $_\n";
   }
-
+  #A hash is formed from nodes with same read-id and passed to subroutine localmerge.
   if ($tag ne $lasttag)
   {
     localmerge();
