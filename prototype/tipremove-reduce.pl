@@ -4,6 +4,8 @@ use lib ".";
 use PAsm;
 use Data::Dumper;
 
+##Parses each node and removes the link with nodes which has msgtype 'T'. 
+
 my $linksremoved = 0;
 my $threadsremoved = 0;
 my $tipskept = 0;
@@ -70,7 +72,7 @@ sub	trimNodes
           {
             ## remove it
             my $adj = $node->{trim}->{$dir}->[$i]->{adj};
-            node_removelink($node, $tip, $adj);
+            node_removelink($node, $tip, $adj);   ##subroutine from PAsm module. Deletes the link to the tip node.
 
             $linksremoved++;
           }

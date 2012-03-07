@@ -4,6 +4,8 @@ use lib ".";
 use PAsm;
 use Data::Dumper;
 
+## Maps the tips with its only neighbour to be removed by tipremove-reduce.pl code. The node not connected to the remaining graph is eliminated.
+
 my $tipsremoved = 0;
 
 print STDERR "Removing tips <= $TIPLENGTH bp\n";
@@ -29,11 +31,15 @@ while (<>)
     die "Unknown msg: $_\n";
   }
 
-  my $fdegree = node_degree($node, "f");
-  my $rdegree = node_degree($node, "r");
-  my $len     = node_len($node);
-
-  if (($len <= $TIPLENGTH) && ($fdegree + $rdegree <= 1))
+  my $fdegree = node_degree($node, "f"); ##calculates total number of edges from this node in forward direction
+  my $rdegree = node_degree($node, "r"); ##calculates total number of edges from this node in reverse direction
+  my $len     = node_len($node);         ##number of nucleotide which make up the node.
+  #print "nodeid=$nodeid\n";
+  #print "fdegree=$fdegree\n";
+  #print "rdegree=$rdegree\n";
+  #print "len=$len\n";
+  
+  if (($len <= $TIPLENGTH) && ($fdegree + $rdegree <= 1))      ## TIPLENGTH is the maximum node length to trim away
   {
     $tipsremoved++;
 
