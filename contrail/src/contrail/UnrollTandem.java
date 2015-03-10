@@ -1,13 +1,7 @@
 package contrail;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.List;
 
 
 import org.apache.hadoop.conf.Configuration;
@@ -33,65 +27,46 @@ import org.apache.hadoop.util.ToolRunner;
 import org.apache.log4j.Logger;
 
 
-public class MateCleanLinks extends Configured implements Tool 
+public class UnrollTandem extends Configured implements Tool 
 {	
-	private static final Logger sLogger = Logger.getLogger(MateCleanLinks.class);
+	private static final Logger sLogger = Logger.getLogger(UnrollTandem.class);
 	
-	public static boolean V = false;
 	
-	// MateCleanLinksMapper
+	// UnrollTandemMapper
 	///////////////////////////////////////////////////////////////////////////
 	
-	private static class MateCleanLinksMapper extends MapReduceBase 
+	private static class UnrollTandemMapper extends MapReduceBase 
     implements Mapper<LongWritable, Text, Text, Text> 
 	{
+		private static int K = 0;
+		
+		public void configure(JobConf job) 
+		{
+			K = Integer.parseInt(job.get("K"));
+		}
+		
 		public void map(LongWritable lineid, Text nodetxt,
                 OutputCollector<Text, Text> output, Reporter reporter)
                 throws IOException 
         {
-			// Repeat the node and killlink messages
-			String msg = nodetxt.toString();
-			String [] vals = msg.split("\t");
-			
-			output.collect(new Text(vals[0]),
-					       new Text(Node.joinstr("\t", vals, 1)));
-			
-			reporter.incrCounter("Contrail", "msgs", 1);
+			Node node = new Node();
+			node.fromNodeMsg(nodetxt.toString());
+
+			output.collect(new Text(node.getNodeId()), new Text(node.toNodeMsg()));
+			reporter.incrCounter("Contrail", "nodes", 1);
         }
 	}
 
-	// MateCleanLinksReducer
+	// UnrollTandemReducer
 	///////////////////////////////////////////////////////////////////////////
 
-	private static class MateCleanLinksReducer extends MapReduceBase 
+	private static class UnrollTandemReducer extends MapReduceBase 
 	implements Reducer<Text, Text, Text, Text> 
 	{
-		public class Edge
-		{
-			String et;
-			String v;
-			
-			public Edge (String [] vals, int offset)
-			{
-				et = vals[offset];
-				v  = vals[offset+1];
-			}
-			
-			public String toString()
-			{
-				return et + ":" + v;
-			}
-			
-			public int hashCode()
-			{
-				return toString().hashCode();
-			}
-			
-			public boolean equals(Object o)
-			{
-				Edge e = (Edge) o;
-				return toString().equals(e.toString());
-			}
+		private static int K = 0;
+		
+		public void configure(JobConf job) {
+			K = Integer.parseInt(job.get("K"));
 		}
 		
 		public void reduce(Text nodeid, Iterator<Text> iter,
@@ -100,17 +75,13 @@ public class MateCleanLinks extends Configured implements Tool
 		{
 			Node node = new Node(nodeid.toString());
 			
-			V = node.getNodeId().equals("GMSRRSDLCJGRDHA");
-			
-			Set<Edge> deadedges = new HashSet<Edge>();
-			
 			int sawnode = 0;
 			
 			while(iter.hasNext())
 			{
 				String msg = iter.next().toString();
 				
-				if (V) { System.err.println(nodeid.toString() + "\t" + msg); }
+				//System.err.println(nodeid.toString() + "\t" + msg);
 				
 				String [] vals = msg.split("\t");
 				
@@ -118,14 +89,6 @@ public class MateCleanLinks extends Configured implements Tool
 				{
 					node.parseNodeMsg(vals, 0);
 					sawnode++;
-				}
-				else if (vals[0].equals(Node.KILLLINKMSG))
-				{
-					Edge e = new Edge(vals, 1);
-					if (!deadedges.add(e))
-					{
-						System.err.println("can't remove same link twice: " + e.toString());
-					}
 				}
 				else
 				{
@@ -136,25 +99,6 @@ public class MateCleanLinks extends Configured implements Tool
 			if (sawnode != 1)
 			{
 				throw new IOException("ERROR: Didn't see exactly 1 nodemsg (" + sawnode + ") for " + nodeid.toString());
-			}
-			
-			
-			if (!deadedges.isEmpty())
-			{
-				Iterator<Edge> de = deadedges.iterator();
-				long removed_edges = 0;
-				
-				while (de.hasNext())
-				{
-					Edge e = de.next();
-					
-					if (V) { System.err.println("Removing " + node.getNodeId() + " " + e.toString()); }
-					
-					node.removelink(e.v, e.et);
-					removed_edges++;
-				}
-				
-				reporter.incrCounter("Contrail", "removed_edges", removed_edges);
 			}
 			
 			output.collect(nodeid, new Text(node.toNodeMsg()));
@@ -169,15 +113,15 @@ public class MateCleanLinks extends Configured implements Tool
 	
 	public RunningJob run(String inputPath, String outputPath) throws Exception
 	{ 
-		sLogger.info("Tool name: MateCleanLinks");
+		sLogger.info("Tool name: UnrollTandem");
 		sLogger.info(" - input: "  + inputPath);
 		sLogger.info(" - output: " + outputPath);
 		
 		JobConf conf = new JobConf(Stats.class);
-		conf.setJobName("MateCleanLinks " + inputPath);
-		
+		conf.setJobName("UnrollTandem " + inputPath + " " + ContrailConfig.K);
+
 		ContrailConfig.initializeConfiguration(conf);
-		
+			
 		FileInputFormat.addInputPath(conf, new Path(inputPath));
 		FileOutputFormat.setOutputPath(conf, new Path(outputPath));
 
@@ -190,8 +134,8 @@ public class MateCleanLinks extends Configured implements Tool
 		conf.setOutputKeyClass(Text.class);
 		conf.setOutputValueClass(Text.class);
 
-		conf.setMapperClass(MateCleanLinksMapper.class);
-		conf.setReducerClass(MateCleanLinksReducer.class);
+		conf.setMapperClass(UnrollTandemMapper.class);
+		conf.setReducerClass(UnrollTandemReducer.class);
 
 		//delete the output directory if it exists already
 		FileSystem.get(conf).delete(new Path(outputPath), true);
@@ -205,9 +149,9 @@ public class MateCleanLinks extends Configured implements Tool
 
 	public int run(String[] args) throws Exception 
 	{
-		String inputPath  = "/Users/mschatz/contrail/Ec500k.cor.21/11-scaffold.1.final";
-		String outputPath = "/users/mschatz/cleanout";
-		
+		String inputPath  = "/Users/mschatz/build/Contrail/data/B.anthracis.36.100.sfa";
+		String outputPath = "/users/mschatz/try/buildout";
+		ContrailConfig.K = 21;
 		run(inputPath, outputPath);
 		return 0;
 	}
@@ -218,7 +162,7 @@ public class MateCleanLinks extends Configured implements Tool
 
 	public static void main(String[] args) throws Exception 
 	{
-		int res = ToolRunner.run(new Configuration(), new MateCleanLinks(), args);
+		int res = ToolRunner.run(new Configuration(), new UnrollTandem(), args);
 		System.exit(res);
 	}
 }

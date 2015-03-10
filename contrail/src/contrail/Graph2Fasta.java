@@ -1,13 +1,6 @@
 package contrail;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.List;
 
 
 import org.apache.hadoop.conf.Configuration;
@@ -23,7 +16,6 @@ import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.MapReduceBase;
 import org.apache.hadoop.mapred.Mapper;
 import org.apache.hadoop.mapred.OutputCollector;
-import org.apache.hadoop.mapred.Reducer;
 import org.apache.hadoop.mapred.Reporter;
 import org.apache.hadoop.mapred.RunningJob;
 import org.apache.hadoop.mapred.TextInputFormat;

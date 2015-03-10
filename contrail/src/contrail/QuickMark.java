@@ -1,14 +1,8 @@
 package contrail;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.List;
-
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
@@ -33,61 +27,62 @@ import org.apache.hadoop.util.ToolRunner;
 import org.apache.log4j.Logger;
 
 
-public class ToolTemplate extends Configured implements Tool 
+public class QuickMark extends Configured implements Tool 
 {	
-	private static final Logger sLogger = Logger.getLogger(ToolTemplate.class);
+	private static final Logger sLogger = Logger.getLogger(QuickMark.class);
 	
-	
-	// TEMPLATEMapper
-	///////////////////////////////////////////////////////////////////////////
-	
-	private static class TEMPLATEMapper extends MapReduceBase 
+	private static class QuickMarkMapper extends MapReduceBase 
     implements Mapper<LongWritable, Text, Text, Text> 
 	{
-		private static int K = 0;
-		
-		public void configure(JobConf job) 
-		{
-			K = Integer.parseInt(job.get("K"));
-		}
-		
 		public void map(LongWritable lineid, Text nodetxt,
                 OutputCollector<Text, Text> output, Reporter reporter)
                 throws IOException 
         {
 			Node node = new Node();
 			node.fromNodeMsg(nodetxt.toString());
+			
+			if (node.canCompress("f") || node.canCompress("r"))
+			{
+				// tell all of my neighbors I intend to compress
+				reporter.incrCounter("Contrail", "compressible", 1);
+			
+				for(String et : Node.edgetypes)
+				{
+					List<String> edges = node.getEdges(et);
+					if (edges != null)
+					{
+						for (String v : edges)
+						{
+							output.collect(new Text(v), new Text(Node.COMPRESSPAIR));
+						}
+					}
+				}
+			}
 
 			output.collect(new Text(node.getNodeId()), new Text(node.toNodeMsg()));
-			reporter.incrCounter("Contrail", "nodes", 1);
+			
+			reporter.incrCounter("Contrail", "nodes", 1);	
         }
 	}
-
-	// TEMPLATEReducer
-	///////////////////////////////////////////////////////////////////////////
-
-	private static class TEMPLATEReducer extends MapReduceBase 
+	
+	private static class QuickMarkReducer extends MapReduceBase 
 	implements Reducer<Text, Text, Text, Text> 
 	{
-		private static int K = 0;
-		
-		public void configure(JobConf job) {
-			K = Integer.parseInt(job.get("K"));
-		}
-		
 		public void reduce(Text nodeid, Iterator<Text> iter,
 				OutputCollector<Text, Text> output, Reporter reporter)
 				throws IOException 
 		{
+			boolean compresspair = false;
+			
 			Node node = new Node(nodeid.toString());
 			
 			int sawnode = 0;
-			
+						
 			while(iter.hasNext())
 			{
 				String msg = iter.next().toString();
 				
-				//System.err.println(nodeid.toString() + "\t" + msg);
+				//System.err.println(key.toString() + "\t" + msg);
 				
 				String [] vals = msg.split("\t");
 				
@@ -95,6 +90,10 @@ public class ToolTemplate extends Configured implements Tool
 				{
 					node.parseNodeMsg(vals, 0);
 					sawnode++;
+				}
+				else if (vals[0].equals(Node.COMPRESSPAIR))
+				{
+					compresspair = true;
 				}
 				else
 				{
@@ -106,25 +105,30 @@ public class ToolTemplate extends Configured implements Tool
 			{
 				throw new IOException("ERROR: Didn't see exactly 1 nodemsg (" + sawnode + ") for " + nodeid.toString());
 			}
-			
+					
+			if (node.canCompress("f") || node.canCompress("r") || compresspair)
+			{
+				node.setMertag("0");
+				reporter.incrCounter("Contrail", "compressibleneighborhood", 1);
+			}
+			else
+			{
+				node.setMertag(Integer.toHexString(node.getNodeId().hashCode()));
+			}
+
 			output.collect(nodeid, new Text(node.toNodeMsg()));
 		}
 	}
 
-	
-	
-	
-	// Run Tool
-	///////////////////////////////////////////////////////////////////////////	
-	
+
 	public RunningJob run(String inputPath, String outputPath) throws Exception
 	{ 
-		sLogger.info("Tool name: TEMPLATE");
+		sLogger.info("Tool name: QuickMark");
 		sLogger.info(" - input: "  + inputPath);
 		sLogger.info(" - output: " + outputPath);
 		
 		JobConf conf = new JobConf(Stats.class);
-		conf.setJobName("TEMPLATE " + inputPath + " " + ContrailConfig.K);
+		conf.setJobName("QuickMark " + inputPath);
 		
 		ContrailConfig.initializeConfiguration(conf);
 			
@@ -140,8 +144,8 @@ public class ToolTemplate extends Configured implements Tool
 		conf.setOutputKeyClass(Text.class);
 		conf.setOutputValueClass(Text.class);
 
-		conf.setMapperClass(TEMPLATEMapper.class);
-		conf.setReducerClass(TEMPLATEReducer.class);
+		conf.setMapperClass(QuickMarkMapper.class);
+		conf.setReducerClass(QuickMarkReducer.class);
 
 		//delete the output directory if it exists already
 		FileSystem.get(conf).delete(new Path(outputPath), true);
@@ -149,27 +153,20 @@ public class ToolTemplate extends Configured implements Tool
 		return JobClient.runJob(conf);
 	}
 	
-
-	// Parse Arguments and run
-	///////////////////////////////////////////////////////////////////////////	
-
+	
 	public int run(String[] args) throws Exception 
 	{
-		String inputPath  = "/Users/mschatz/build/Contrail/data/B.anthracis.36.100.sfa";
-		String outputPath = "/users/mschatz/try/buildout";
-		ContrailConfig.K = 21;
+		String inputPath  = "/Users/mschatz/try/compressible";
+		String outputPath = "/users/mschatz/try/quickmark";
 		
 		run(inputPath, outputPath);
+		
 		return 0;
 	}
 
-
-	// Main
-	///////////////////////////////////////////////////////////////////////////	
-
 	public static void main(String[] args) throws Exception 
 	{
-		int res = ToolRunner.run(new Configuration(), new ToolTemplate(), args);
+		int res = ToolRunner.run(new Configuration(), new QuickMark(), args);
 		System.exit(res);
 	}
 }

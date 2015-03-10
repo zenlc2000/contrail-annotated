@@ -3,8 +3,8 @@ package contrail;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
+
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
@@ -29,62 +29,84 @@ import org.apache.hadoop.util.ToolRunner;
 import org.apache.log4j.Logger;
 
 
-public class QuickMark extends Configured implements Tool 
+public class MateCleanLinks extends Configured implements Tool 
 {	
-	private static final Logger sLogger = Logger.getLogger(QuickMark.class);
+	private static final Logger sLogger = Logger.getLogger(MateCleanLinks.class);
 	
-	private static class QuickMarkMapper extends MapReduceBase 
+	public static boolean V = false;
+	
+	// MateCleanLinksMapper
+	///////////////////////////////////////////////////////////////////////////
+	
+	private static class MateCleanLinksMapper extends MapReduceBase 
     implements Mapper<LongWritable, Text, Text, Text> 
 	{
 		public void map(LongWritable lineid, Text nodetxt,
                 OutputCollector<Text, Text> output, Reporter reporter)
                 throws IOException 
         {
-			Node node = new Node();
-			node.fromNodeMsg(nodetxt.toString());
+			// Repeat the node and killlink messages
+			String msg = nodetxt.toString();
+			String [] vals = msg.split("\t");
 			
-			if (node.canCompress("f") || node.canCompress("r"))
-			{
-				// tell all of my neighbors I intend to compress
-				reporter.incrCounter("Contrail", "compressible", 1);
+			output.collect(new Text(vals[0]),
+					       new Text(Node.joinstr("\t", vals, 1)));
 			
-				for(String et : Node.edgetypes)
-				{
-					List<String> edges = node.getEdges(et);
-					if (edges != null)
-					{
-						for (String v : edges)
-						{
-							output.collect(new Text(v), new Text(Node.COMPRESSPAIR));
-						}
-					}
-				}
-			}
-
-			output.collect(new Text(node.getNodeId()), new Text(node.toNodeMsg()));
-			
-			reporter.incrCounter("Contrail", "nodes", 1);	
+			reporter.incrCounter("Contrail", "msgs", 1);
         }
 	}
-	
-	private static class QuickMarkReducer extends MapReduceBase 
+
+	// MateCleanLinksReducer
+	///////////////////////////////////////////////////////////////////////////
+
+	private static class MateCleanLinksReducer extends MapReduceBase 
 	implements Reducer<Text, Text, Text, Text> 
 	{
+		public class Edge
+		{
+			String et;
+			String v;
+			
+			public Edge (String [] vals, int offset)
+			{
+				et = vals[offset];
+				v  = vals[offset+1];
+			}
+			
+			public String toString()
+			{
+				return et + ":" + v;
+			}
+			
+			public int hashCode()
+			{
+				return toString().hashCode();
+			}
+			
+			public boolean equals(Object o)
+			{
+				Edge e = (Edge) o;
+				return toString().equals(e.toString());
+			}
+		}
+		
 		public void reduce(Text nodeid, Iterator<Text> iter,
 				OutputCollector<Text, Text> output, Reporter reporter)
 				throws IOException 
 		{
-			boolean compresspair = false;
-			
 			Node node = new Node(nodeid.toString());
 			
+			V = node.getNodeId().equals("GMSRRSDLCJGRDHA");
+			
+			Set<Edge> deadedges = new HashSet<Edge>();
+			
 			int sawnode = 0;
-						
+			
 			while(iter.hasNext())
 			{
 				String msg = iter.next().toString();
 				
-				//System.err.println(key.toString() + "\t" + msg);
+				if (V) { System.err.println(nodeid.toString() + "\t" + msg); }
 				
 				String [] vals = msg.split("\t");
 				
@@ -93,9 +115,13 @@ public class QuickMark extends Configured implements Tool
 					node.parseNodeMsg(vals, 0);
 					sawnode++;
 				}
-				else if (vals[0].equals(Node.COMPRESSPAIR))
+				else if (vals[0].equals(Node.KILLLINKMSG))
 				{
-					compresspair = true;
+					Edge e = new Edge(vals, 1);
+					if (!deadedges.add(e))
+					{
+						System.err.println("can't remove same link twice: " + e.toString());
+					}
 				}
 				else
 				{
@@ -107,33 +133,47 @@ public class QuickMark extends Configured implements Tool
 			{
 				throw new IOException("ERROR: Didn't see exactly 1 nodemsg (" + sawnode + ") for " + nodeid.toString());
 			}
+			
+			
+			if (!deadedges.isEmpty())
+			{
+				Iterator<Edge> de = deadedges.iterator();
+				long removed_edges = 0;
+				
+				while (de.hasNext())
+				{
+					Edge e = de.next();
 					
-			if (node.canCompress("f") || node.canCompress("r") || compresspair)
-			{
-				node.setMertag("0");
-				reporter.incrCounter("Contrail", "compressibleneighborhood", 1);
+					if (V) { System.err.println("Removing " + node.getNodeId() + " " + e.toString()); }
+					
+					node.removelink(e.v, e.et);
+					removed_edges++;
+				}
+				
+				reporter.incrCounter("Contrail", "removed_edges", removed_edges);
 			}
-			else
-			{
-				node.setMertag(Integer.toHexString(node.getNodeId().hashCode()));
-			}
-
+			
 			output.collect(nodeid, new Text(node.toNodeMsg()));
 		}
 	}
 
-
+	
+	
+	
+	// Run Tool
+	///////////////////////////////////////////////////////////////////////////	
+	
 	public RunningJob run(String inputPath, String outputPath) throws Exception
 	{ 
-		sLogger.info("Tool name: QuickMark");
+		sLogger.info("Tool name: MateCleanLinks");
 		sLogger.info(" - input: "  + inputPath);
 		sLogger.info(" - output: " + outputPath);
 		
 		JobConf conf = new JobConf(Stats.class);
-		conf.setJobName("QuickMark " + inputPath);
+		conf.setJobName("MateCleanLinks " + inputPath);
 		
 		ContrailConfig.initializeConfiguration(conf);
-			
+		
 		FileInputFormat.addInputPath(conf, new Path(inputPath));
 		FileOutputFormat.setOutputPath(conf, new Path(outputPath));
 
@@ -146,8 +186,8 @@ public class QuickMark extends Configured implements Tool
 		conf.setOutputKeyClass(Text.class);
 		conf.setOutputValueClass(Text.class);
 
-		conf.setMapperClass(QuickMarkMapper.class);
-		conf.setReducerClass(QuickMarkReducer.class);
+		conf.setMapperClass(MateCleanLinksMapper.class);
+		conf.setReducerClass(MateCleanLinksReducer.class);
 
 		//delete the output directory if it exists already
 		FileSystem.get(conf).delete(new Path(outputPath), true);
@@ -155,20 +195,26 @@ public class QuickMark extends Configured implements Tool
 		return JobClient.runJob(conf);
 	}
 	
-	
+
+	// Parse Arguments and run
+	///////////////////////////////////////////////////////////////////////////	
+
 	public int run(String[] args) throws Exception 
 	{
-		String inputPath  = "/Users/mschatz/try/compressible";
-		String outputPath = "/users/mschatz/try/quickmark";
+		String inputPath  = "/Users/mschatz/contrail/Ec500k.cor.21/11-scaffold.1.final";
+		String outputPath = "/users/mschatz/cleanout";
 		
 		run(inputPath, outputPath);
-		
 		return 0;
 	}
 
+
+	// Main
+	///////////////////////////////////////////////////////////////////////////	
+
 	public static void main(String[] args) throws Exception 
 	{
-		int res = ToolRunner.run(new Configuration(), new QuickMark(), args);
+		int res = ToolRunner.run(new Configuration(), new MateCleanLinks(), args);
 		System.exit(res);
 	}
 }

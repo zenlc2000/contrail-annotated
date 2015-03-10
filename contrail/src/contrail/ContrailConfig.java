@@ -3,7 +3,6 @@ package contrail;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
@@ -77,6 +76,9 @@ public class ContrailConfig
 	public static String RUN_STATS = null;
 	public static long  N50_TARGET = -1;
 	public static String CONVERT_FA = null;
+
+    // gpu
+    public static boolean USE_GPU = false;
 	
 	public static void validateConfiguration()
 	{
@@ -454,6 +456,8 @@ public class ContrailConfig
 	        if (line.hasOption("run_stats"))    { RUN_STATS = line.getOptionValue("run_stats"); }
 	        
 	        if (line.hasOption("convert_fa"))   { CONVERT_FA = line.getOptionValue("convert_fa"); }
+
+            if(line.hasOption("gpu")) { USE_GPU = true; }
 	    }
 	    catch( ParseException exp ) 
 	    {

@@ -1,13 +1,7 @@
 package contrail;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.List;
 
 
 import org.apache.hadoop.conf.Configuration;
@@ -33,15 +27,15 @@ import org.apache.hadoop.util.ToolRunner;
 import org.apache.log4j.Logger;
 
 
-public class Threadible extends Configured implements Tool 
+public class ToolTemplate extends Configured implements Tool 
 {	
-	private static final Logger sLogger = Logger.getLogger(Threadible.class);
+	private static final Logger sLogger = Logger.getLogger(ToolTemplate.class);
 	
 	
-	// ThreadibleMapper
+	// TEMPLATEMapper
 	///////////////////////////////////////////////////////////////////////////
 	
-	private static class ThreadibleMapper extends MapReduceBase 
+	private static class TEMPLATEMapper extends MapReduceBase 
     implements Mapper<LongWritable, Text, Text, Text> 
 	{
 		private static int K = 0;
@@ -60,38 +54,13 @@ public class Threadible extends Configured implements Tool
 
 			output.collect(new Text(node.getNodeId()), new Text(node.toNodeMsg()));
 			reporter.incrCounter("Contrail", "nodes", 1);
-			
-			List<String> threadpath = node.getThreadPath();
-			
-			// Tell my neighbors that I intend to split
-			if (threadpath != null && threadpath.size() > 0)
-			{
-				reporter.incrCounter("Contrail", "threadible", 1);
-				
-				for(String et : Node.edgetypes)
-				{
-					List<String> nids = node.getEdges(et);
-					String dir = Node.flip_link(et);
-					
-					if (nids != null)
-					{
-						for (String v : nids)
-						{
-							if (!v.equals(node.getNodeId()))
-							{
-					            output.collect(new Text(v), new Text(Node.THREADIBLEMSG + "\t" + dir + ":" + node.getNodeId()));
-							}
-						}
-					}
-				}
-			}
         }
 	}
 
-	// ThreadibleReducer
+	// TEMPLATEReducer
 	///////////////////////////////////////////////////////////////////////////
 
-	private static class ThreadibleReducer extends MapReduceBase 
+	private static class TEMPLATEReducer extends MapReduceBase 
 	implements Reducer<Text, Text, Text, Text> 
 	{
 		private static int K = 0;
@@ -105,8 +74,6 @@ public class Threadible extends Configured implements Tool
 				throws IOException 
 		{
 			Node node = new Node(nodeid.toString());
-			
-			List<String> threadmsgs = new ArrayList<String>();
 			
 			int sawnode = 0;
 			
@@ -123,11 +90,6 @@ public class Threadible extends Configured implements Tool
 					node.parseNodeMsg(vals, 0);
 					sawnode++;
 				}
-				else if (vals[0].equals(Node.THREADIBLEMSG))
-				{
-					String port = vals[1];
-					threadmsgs.add(port);
-				}
 				else
 				{
 					throw new IOException("Unknown msgtype: " + msg);
@@ -139,15 +101,11 @@ public class Threadible extends Configured implements Tool
 				throw new IOException("ERROR: Didn't see exactly 1 nodemsg (" + sawnode + ") for " + nodeid.toString());
 			}
 			
-			for(String port : threadmsgs)
-			{
-				node.addThreadibleMsg(port);
-			}
-			
 			output.collect(nodeid, new Text(node.toNodeMsg()));
 		}
 	}
 
+	
 	
 	
 	// Run Tool
@@ -155,12 +113,12 @@ public class Threadible extends Configured implements Tool
 	
 	public RunningJob run(String inputPath, String outputPath) throws Exception
 	{ 
-		sLogger.info("Tool name: Threadible");
+		sLogger.info("Tool name: TEMPLATE");
 		sLogger.info(" - input: "  + inputPath);
 		sLogger.info(" - output: " + outputPath);
 		
 		JobConf conf = new JobConf(Stats.class);
-		conf.setJobName("Threadible " + inputPath + " " + ContrailConfig.K);
+		conf.setJobName("TEMPLATE " + inputPath + " " + ContrailConfig.K);
 		
 		ContrailConfig.initializeConfiguration(conf);
 			
@@ -176,8 +134,8 @@ public class Threadible extends Configured implements Tool
 		conf.setOutputKeyClass(Text.class);
 		conf.setOutputValueClass(Text.class);
 
-		conf.setMapperClass(ThreadibleMapper.class);
-		conf.setReducerClass(ThreadibleReducer.class);
+		conf.setMapperClass(TEMPLATEMapper.class);
+		conf.setReducerClass(TEMPLATEReducer.class);
 
 		//delete the output directory if it exists already
 		FileSystem.get(conf).delete(new Path(outputPath), true);
@@ -191,9 +149,10 @@ public class Threadible extends Configured implements Tool
 
 	public int run(String[] args) throws Exception 
 	{
-		String inputPath  = "/Users/mschatz/try/09-repeats.1.threads";
-		String outputPath = "/users/mschatz/try/09-repeats.1.threadible";
-		ContrailConfig.K = 21; 
+		String inputPath  = "/Users/mschatz/build/Contrail/data/B.anthracis.36.100.sfa";
+		String outputPath = "/users/mschatz/try/buildout";
+		ContrailConfig.K = 21;
+		
 		run(inputPath, outputPath);
 		return 0;
 	}
@@ -204,7 +163,7 @@ public class Threadible extends Configured implements Tool
 
 	public static void main(String[] args) throws Exception 
 	{
-		int res = ToolRunner.run(new Configuration(), new Threadible(), args);
+		int res = ToolRunner.run(new Configuration(), new ToolTemplate(), args);
 		System.exit(res);
 	}
 }
