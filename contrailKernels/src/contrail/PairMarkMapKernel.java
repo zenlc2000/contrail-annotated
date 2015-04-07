@@ -57,7 +57,7 @@ public class PairMarkMapKernel implements Kernel, PairMarkMapKernelInterface
 //        TailInfo fbuddy = getBuddy(node, "f");
 //        TailInfo rbuddy = getBuddy(node, "r");
 
-        if ((_Fbuddy != null) || (_rBuddy != null))
+   /*     if ((_Fbuddy != null) || (_rBuddy != null))
         {
             String[] nodeStr = _nodetxt.split("\t");//node.getNodeId();
             String nodeId = nodeStr[0];
@@ -80,7 +80,7 @@ public class PairMarkMapKernel implements Kernel, PairMarkMapKernelInterface
             }
 
 
-        }
+        }*/
     }
 
     public boolean isMale(String nodeid)

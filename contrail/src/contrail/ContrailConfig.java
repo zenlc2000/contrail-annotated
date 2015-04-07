@@ -167,7 +167,9 @@ public class ContrailConfig
 		conf.setFloat("MAX_UNIQUE_COV", MAX_UNIQUE_COV);
 		
 		conf.setLong("N50_TARGET", N50_TARGET);
-	}
+        conf.set("mapred.job.tracker", "local");
+        conf.setBoolean("USE_GPU", USE_GPU);
+    }
 	
 	
 	public static void printConfiguration()
@@ -230,6 +232,7 @@ public class ContrailConfig
 		Contrail.msg("N50_TARGET = " + N50_TARGET + "\n");
 		
 		Contrail.msg("CONVERT_FA = " + CONVERT_FA + "\n");
+        Contrail.msg("USE_GPU = " + USE_GPU + "\n");
 		
 		Contrail.msg("\n");
 		
@@ -313,7 +316,9 @@ public class ContrailConfig
 		options.addOption(OptionBuilder.withArgName("dir").hasArg().withDescription("convert fa").create("convert_fa"));
 
 	    CommandLineParser parser = new GnuParser();
-	    
+
+        //GPU
+        options.addOption(new Option("gpu", "use gpu for processing"));
 	    try 
 	    {
 	        CommandLine line = parser.parse( options, args );

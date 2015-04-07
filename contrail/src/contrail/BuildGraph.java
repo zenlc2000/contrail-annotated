@@ -10,8 +10,12 @@ import org.apache.hadoop.mapred.*;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 import org.apache.log4j.Logger;
+import org.trifort.rootbeer.runtime.Kernel;
+import org.trifort.rootbeer.runtime.Rootbeer;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.util.*;
 
 
@@ -25,12 +29,14 @@ public class BuildGraph extends Configured implements Tool
 		private static int K = 0;
 		private static int TRIM5 = 0;
 		private static int TRIM3 = 0;
+        public static boolean USE_GPU;
 		
 		public void configure(JobConf job) 
 		{
 			K = Integer.parseInt(job.get("K"));
 			TRIM5 = Integer.parseInt(job.get("TRIM5"));
 			TRIM3 = Integer.parseInt(job.get("TRIM3"));
+            USE_GPU = Boolean.parseBoolean(job.get("USE_GPU"));
 		}
 		
 		public void map(LongWritable lineid, Text nodetxt,
@@ -38,6 +44,12 @@ public class BuildGraph extends Configured implements Tool
 		                throws IOException 
 		{
 			String[] fields = nodetxt.toString().split("\t");
+            List<Kernel> m_jobs = new ArrayList<Kernel>();
+
+            char[] output_key1 = null ;
+            char[] output_value1 = null;
+            char[] output_key2 = null;
+            char[] output_value2 = null;
 			
 			if (fields.length != 2)
 			{
@@ -47,7 +59,7 @@ public class BuildGraph extends Configured implements Tool
 			}
 
 
-            Contrail.msg("BuildGraph: " + lineid.toString() + "\t" + nodetxt.toString());
+            System.out.println("BuildGraph: " + lineid.toString() + "\t" + nodetxt.toString());
 			String tag = fields[0];
 			
 			tag.replaceAll(" ", "_");
@@ -102,65 +114,165 @@ public class BuildGraph extends Configured implements Tool
 			int chunk = 0;
 
 			int end = seq.length() - K;
-			
+			String[] seen_mers  = seenmers.toArray(new String[seenmers.size()]);
+
+            Rootbeer rootbeer = new Rootbeer();
+
 			for (int i = 0; i < end; i++)
-			{
-				String u = seq.substring(i,   i+K);
-				String v = seq.substring(i+1, i+1+K);
-				
-				String f = seq.substring(i, i+1);
-				String l = seq.substring(i+K, i+K+1);
-				f = Node.rc(f);
+            {
+                if (USE_GPU)
+                {
+//                    char[] ch_seq = seq.toCharArray();
+                    try
+                    {
+                        Class c = Class.forName("contrail.BuildGraphMapKernel");
+//                        Constructor<Kernel> ctor = c.getConstructor(String.class, int.class, int.class, String[].class, String.class);
+                        Constructor<Kernel> ctor = c.getConstructor(char[].class, int.class, int.class, String[].class, String.class, char[].class, char[].class,
+								char[].class, char[].class, char.class, char.class, int.class, String.class);
+                        Kernel job = ctor.newInstance(seq.toCharArray(), K, i, seen_mers, tag, output_key1,
+								output_value1, output_key2, output_value2, ustate, vstate, chunk, chunkstr);
+                        m_jobs.add(job);
+                    } catch (Exception e)
+                    {
+                        throw new RuntimeException(e);
+                    }
 
-				char ud = Node.canonicaldir(u);
-				char vd = Node.canonicaldir(v);
 
-				String t  = Character.toString(ud) + vd;
-				String tr = Node.flip_link(t);
-				
-				String uc0 = Node.canonicalseq(u);
-				String vc0 = Node.canonicalseq(v);
+                    //String sequence, int kval, int index, String[] seen_mers, String t
 
-				String uc = Node.str2dna(uc0);
-				String vc = Node.str2dna(vc0);
-				
-				//System.out.println(u + " " + uc0 + " " + ud + " " + uc);
-				//System.out.println(v + " " + vc0 + " " + vd + " " + vc);
-				
-				if ((i == 0) && (ud == 'r'))  { ustate = '6'; }
-				if (i+1 == end) { vstate = '3'; }
 
-				boolean seen = (seenmers.contains(u) || seenmers.contains(v) || u.equals(v));
-				seenmers.add(u);
+                } else
+                {
+                    String u = seq.substring(i, i + K);
+                    String v = seq.substring(i + 1, i + 1 + K);
 
-				if (seen)
-				{
-					chunk++;
-					chunkstr = "c" + chunk;
-					//#print STDERR "repeat internal to $tag: $uc u$i $chunk\n";
-				}
+                    String f = seq.substring(i, i + 1);
+                    String l = seq.substring(i + K, i + K + 1);
+                    f = Node.rc(f);
 
-				//System.out.println(uc + "\t" + t + "\t" + l + "\t" + tag + chunkstr + "\t" + ustate);
-				
-				output.collect(new Text(uc), 
-						       new Text(t + "\t" + l + "\t" + tag + chunkstr + "\t" + ustate));
+                    char ud = Node.canonicaldir(u);
+                    char vd = Node.canonicaldir(v);
 
-				if (seen)
-				{
-					chunk++;
-					chunkstr = "c" + chunk;
-					//#print STDERR "repeat internal to $tag: $vc v$i $chunk\n";
-				}
+                    String t = Character.toString(ud) + vd;
+                    String tr = Node.flip_link(t);
 
-				//print "$vc\t$tr\t$f\t$tag$chunk\t$vstate\n";
-				
-				//System.out.println(vc + "\t" + tr + "\t" + f + "\t" + tag + chunkstr + "\t" + vstate);
-				
-				output.collect(new Text(vc), 
-						new Text(tr + "\t" + f + "\t" + tag + chunkstr + "\t" + vstate));
+                    String uc0 = Node.canonicalseq(u);
+                    String vc0 = Node.canonicalseq(v);
 
-				ustate = 'm';
-			}
+                    String uc = Node.str2dna(uc0);
+                    String vc = Node.str2dna(vc0);
+
+                    System.out.println(u + " " + uc0 + " " + ud + " " + uc);
+                    System.out.println(v + " " + vc0 + " " + vd + " " + vc);
+
+                    if ((i == 0) && (ud == 'r'))
+                    {
+                        ustate = '6';
+                    }
+                    if (i + 1 == end)
+                    {
+                        vstate = '3';
+                    }
+
+                    boolean seen = (seenmers.contains(u) || seenmers.contains(v) || u.equals(v));
+                    seenmers.add(u);
+
+                    if (seen)
+                    {
+                        chunk++;
+                        chunkstr = "c" + chunk;
+                        //#print STDERR "repeat internal to $tag: $uc u$i $chunk\n";
+                    }
+
+                    //System.out.println(uc + "\t" + t + "\t" + l + "\t" + tag + chunkstr + "\t" + ustate);
+
+                    output.collect(new Text(uc),
+                            new Text(t + "\t" + l + "\t" + tag + chunkstr + "\t" + ustate));
+
+                    if (seen)
+                    {
+                        chunk++;
+                        chunkstr = "c" + chunk;
+                        //#print STDERR "repeat internal to $tag: $vc v$i $chunk\n";
+                    }
+
+                    //print "$vc\t$tr\t$f\t$tag$chunk\t$vstate\n";
+
+                    System.out.println(vc + "\t" + tr + "\t" + f + "\t" + tag + chunkstr + "\t" + vstate);
+
+                    output.collect(new Text(vc),
+                            new Text(tr + "\t" + f + "\t" + tag + chunkstr + "\t" + vstate));
+
+                    ustate = 'm';
+                }
+            }
+
+            if (USE_GPU)
+            {
+                rootbeer.run(m_jobs);       // Run on GPU
+
+                for (Kernel job : m_jobs)
+                {
+                   BuildGraphMapKernelInterface kernel = (BuildGraphMapKernelInterface) job;
+                    try
+                    {
+//
+
+                        Class<?> aClass = kernel.getClass();
+
+                        Field f_key1 = aClass.getDeclaredField("output_key1");
+                        f_key1.setAccessible(true);
+                        output_key1 = char[].class.cast(f_key1.get(kernel));
+
+                        Field f_value1 = aClass.getDeclaredField("output_value1");
+                        f_value1.setAccessible(true);
+                        output_value1 = char[].class.cast(f_value1.get(kernel));
+
+                        Field f_key2 = aClass.getDeclaredField("output_key2");
+                        f_key2.setAccessible(true);
+                        output_key2 = char[].class.cast(f_key2.get(kernel));
+
+                        Field f_value2 = aClass.getDeclaredField("output_value2");
+                        f_value2.setAccessible(true);
+                        output_value2 = char[].class.cast(f_value2.get(kernel));
+
+                        Field mers = aClass.getDeclaredField("seenmers");
+                        mers.setAccessible(true);
+
+                        String[] mers_value = String[].class.cast(mers.get(kernel));
+                        seenmers = new HashSet<String>(Arrays.asList(mers_value));
+
+						Field f_ustate = aClass.getDeclaredField("ustate");
+						Field f_vstate = aClass.getDeclaredField("vstate");
+						Field f_chunk = aClass.getDeclaredField("chunk");
+						Field f_chunkstr = aClass.getDeclaredField("chunkstr");
+
+						Character ch = Character.class.cast(f_ustate.get((kernel)));
+						Character ch2 = Character.class.cast(f_vstate.get((kernel)));
+						Integer in = Integer.class.cast((f_chunk.get(kernel)));
+
+						ustate = ch.charValue();
+						vstate = ch2.charValue();
+						chunk = in.intValue();
+						chunkstr = new String(char[].class.cast(f_chunkstr.get(kernel)));
+
+
+                        output.collect(new Text(new String(output_key1)), new Text(new String(output_value1)));
+                        output.collect(new Text(new String(output_key2)), new Text(new String(output_value2)));
+                    } catch (NoSuchFieldException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    catch (IllegalAccessException e)
+                    {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+
+
 			
 			reporter.incrCounter("Contrail", "reads_good", 1);
 			reporter.incrCounter("Contrail", "reads_goodbp", seq.length());
@@ -187,18 +299,18 @@ public class BuildGraph extends Configured implements Tool
 						   throws IOException 
 		{
 			Node node = new Node();
-			
+
 			String mertag = null;
 			float cov = 0;
-		
+
                         // Hash keyed based on "f" or "r" direction of the edge
                         // Contains nested hash that is keyed based on single-base extension of the k-mer (neighboring k-mer)
-                        // and stacks upon a list the read ids that contain that neighboring k-mer	
+                        // and stacks upon a list the read ids that contain that neighboring k-mer
 
                         //  storage the de Bruijn in the hash below
                         //  {forward / reverse} -> [ { A / C / G / T } -> [read_id1, read_id2, ...]  ]
 			Map<String, Map<String, List<String>>> edges = new HashMap<String, Map<String, List<String>>>();
-			
+
 			while(iter.hasNext())
 			{
 				String valstr = iter.next().toString();
@@ -208,7 +320,7 @@ public class BuildGraph extends Configured implements Tool
 				String neighbor = vals[1]; // id of neighboring node
 				String tag      = vals[2]; // id of read contributing to edge
 				String state    = vals[3]; // internal or end mer
-				
+
 				// Add the edge to the neighbor
 				Map<String, List<String>> neighborinfo = null;
 				if (edges.containsKey(type))
@@ -220,8 +332,8 @@ public class BuildGraph extends Configured implements Tool
 					neighborinfo = new HashMap<String, List<String>>();
 					edges.put(type, neighborinfo);
 				}
-				
-				
+
+
 				// Now record the read supports the edge
 				List<String> tags = null;
 				if (neighborinfo.containsKey(neighbor))
@@ -233,12 +345,12 @@ public class BuildGraph extends Configured implements Tool
 					tags = new ArrayList<String>();
 					neighborinfo.put(neighbor, tags);
 				}
-				
+
 				if (tags.size() < MAXTHREADREADS)
 				{
 					tags.add(tag);
 				}
-				
+
 				// Check on the mertag
 				if (mertag == null || (tag.compareTo(mertag) < 0))
 				{
@@ -263,20 +375,20 @@ public class BuildGraph extends Configured implements Tool
 
 			node.setMertag(mertag);
 			node.setCoverage(cov);
-			
+
 			String seq = Node.dna2str(curnode.toString());
 			String rc  = Node.rc(seq);
-			
+
 			node.setstr_raw(curnode.toString());
 
 			seq = seq.substring(1);
 			rc  = rc.substring(1);
-			
+
 			char [] dirs = {'f', 'r'};
-			
+
 			for (int d = 0; d < 2; d++)
 			{
-				String x = Character.toString(dirs[d]); 
+				String x = Character.toString(dirs[d]);
 
 				int degree = 0;
 
