@@ -10,8 +10,7 @@ import org.apache.hadoop.mapred.*;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 import org.apache.log4j.Logger;
-import org.trifort.rootbeer.runtime.Kernel;
-import org.trifort.rootbeer.runtime.Rootbeer;
+import org.trifort.rootbeer.runtime.*;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -209,7 +208,9 @@ public class BuildGraph extends Configured implements Tool
 
             if (USE_GPU)
             {
-                rootbeer.run(m_jobs);       // Run on GPU
+
+//					rootbeer.run (m_jobs);
+
 
                 for (Kernel job : m_jobs)
                 {
