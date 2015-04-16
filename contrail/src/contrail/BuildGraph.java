@@ -35,7 +35,7 @@ public class BuildGraph extends Configured implements Tool
 			K = Integer.parseInt(job.get("K"));
 			TRIM5 = Integer.parseInt(job.get("TRIM5"));
 			TRIM3 = Integer.parseInt(job.get("TRIM3"));
-            USE_GPU = Boolean.parseBoolean(job.get("USE_GPU"));
+			USE_GPU = Boolean.parseBoolean(job.get("USE_GPU"));
 		}
 		
 		public void map(LongWritable lineid, Text nodetxt,
@@ -114,105 +114,191 @@ public class BuildGraph extends Configured implements Tool
 
 			int end = seq.length() - K;
 			String[] seen_mers  = seenmers.toArray(new String[seenmers.size()]);
+			final int threadSize = 256;
+			final int blockSize = 8*1024;
+			if ( USE_GPU )
+			{
+				System.out.println ("New Rootbeer");
+				Rootbeer rootbeer = new Rootbeer ();
+				List< GpuDevice > devices = rootbeer.getDevices ();
+				System.out.println ("Devices list");
+				GpuDevice device0 = devices.get (0);
+				System.out.println ("Device 0");
+				Context context0 = device0.createContext ();
+				System.out.println ("Created Context");
+				context0.setCacheConfig (CacheConfig.PREFER_SHARED);
+				System.out.println ("Prefer Shared");
+				context0.setThreadConfig (threadSize, blockSize, threadSize * blockSize);
+				System.out.println ("Set ThreadConfig");
+//				context0.setKernel (new GPUScanKernel (input, resultGPU));
+				context0.buildState ();
+				System.out.println ("BuildState");
 
-            Rootbeer rootbeer = new Rootbeer();
-
-			for (int i = 0; i < end; i++)
-            {
-                if (USE_GPU)
-                {
+				for ( int i = 0; i < end; i++ )
+				{
+//                if (USE_GPU)
+//                {
 //                    char[] ch_seq = seq.toCharArray();
-                    try
-                    {
-                        Class c = Class.forName("contrail.BuildGraphMapKernel");
+					try
+					{
+						Class c = Class.forName ("contrail.BuildGraphMapKernel");
 //                        Constructor<Kernel> ctor = c.getConstructor(String.class, int.class, int.class, String[].class, String.class);
-                        Constructor<Kernel> ctor = c.getConstructor(char[].class, int.class, int.class, String[].class, String.class, char[].class, char[].class,
+						Constructor< Kernel > ctor = c.getConstructor (char[].class, int.class, int.class, String[].class, String.class, char[].class, char[].class,
 								char[].class, char[].class, char.class, char.class, int.class, String.class);
-                        Kernel job = ctor.newInstance(seq.toCharArray(), K, i, seen_mers, tag, output_key1,
+						Kernel job = ctor.newInstance (seq.toCharArray (), K, i, seen_mers, tag, output_key1,
 								output_value1, output_key2, output_value2, ustate, vstate, chunk, chunkstr);
-                        m_jobs.add(job);
-                    } catch (Exception e)
-                    {
-                        throw new RuntimeException(e);
-                    }
+						m_jobs.add (job);
+						context0.run (m_jobs);
 
 
-                    //String sequence, int kval, int index, String[] seen_mers, String t
+					}
+					catch ( Exception e )
+					{
+						throw new RuntimeException (e);
+					}
 
 
-                } else
+					//String sequence, int kval, int index, String[] seen_mers, String t
+
+
+				}
+				for ( Kernel job : m_jobs )
+				{
+					BuildGraphMapKernelInterface kernel = ( BuildGraphMapKernelInterface ) job;
+					try
+					{
+//
+
+						Class< ? > aClass = kernel.getClass ();
+
+						Field f_key1 = aClass.getDeclaredField ("output_key1");
+						f_key1.setAccessible (true);
+						output_key1 = char[].class.cast (f_key1.get (kernel));
+
+						Field f_value1 = aClass.getDeclaredField ("output_value1");
+						f_value1.setAccessible (true);
+						output_value1 = char[].class.cast (f_value1.get (kernel));
+
+						Field f_key2 = aClass.getDeclaredField ("output_key2");
+						f_key2.setAccessible (true);
+						output_key2 = char[].class.cast (f_key2.get (kernel));
+
+						Field f_value2 = aClass.getDeclaredField ("output_value2");
+						f_value2.setAccessible (true);
+						output_value2 = char[].class.cast (f_value2.get (kernel));
+
+						Field mers = aClass.getDeclaredField ("seenmers");
+						mers.setAccessible (true);
+
+						String[] mers_value = String[].class.cast (mers.get (kernel));
+						seenmers = new HashSet< String > (Arrays.asList (mers_value));
+
+						Field f_ustate = aClass.getDeclaredField ("ustate");
+						Field f_vstate = aClass.getDeclaredField ("vstate");
+						Field f_chunk = aClass.getDeclaredField ("chunk");
+						Field f_chunkstr = aClass.getDeclaredField ("chunkstr");
+
+						Character ch = Character.class.cast (f_ustate.get ((kernel)));
+						Character ch2 = Character.class.cast (f_vstate.get ((kernel)));
+						Integer in = Integer.class.cast ((f_chunk.get (kernel)));
+
+						ustate = ch.charValue ();
+						vstate = ch2.charValue ();
+						chunk = in.intValue ();
+						chunkstr = new String (char[].class.cast (f_chunkstr.get (kernel)));
+
+
+						output.collect (new Text (new String (output_key1)), new Text (new String (output_value1)));
+						output.collect (new Text (new String (output_key2)), new Text (new String (output_value2)));
+					}
+					catch ( NoSuchFieldException e )
+					{
+						e.printStackTrace ();
+					}
+					catch ( IllegalAccessException e )
+					{
+						e.printStackTrace ();
+					}
+
+
+				}
+			}
+					 else
                 {
-                    String u = seq.substring(i, i + K);
-                    String v = seq.substring(i + 1, i + 1 + K);
+						 for ( int i = 0; i < end; i++ )
+						 {
+							 String u = seq.substring (i, i + K);
+							 String v = seq.substring (i + 1, i + 1 + K);
 
-                    String f = seq.substring(i, i + 1);
-                    String l = seq.substring(i + K, i + K + 1);
-                    f = Node.rc(f);
+							 String f = seq.substring (i, i + 1);
+							 String l = seq.substring (i + K, i + K + 1);
+							 f = Node.rc (f);
 
-                    char ud = Node.canonicaldir(u);
-                    char vd = Node.canonicaldir(v);
+							 char ud = Node.canonicaldir (u);
+							 char vd = Node.canonicaldir (v);
 
-                    String t = Character.toString(ud) + vd;
-                    String tr = Node.flip_link(t);
+							 String t = Character.toString (ud) + vd;
+							 String tr = Node.flip_link (t);
 
-                    String uc0 = Node.canonicalseq(u);
-                    String vc0 = Node.canonicalseq(v);
+							 String uc0 = Node.canonicalseq (u);
+							 String vc0 = Node.canonicalseq (v);
 
-                    String uc = Node.str2dna(uc0);
-                    String vc = Node.str2dna(vc0);
+							 String uc = Node.str2dna (uc0);
+							 String vc = Node.str2dna (vc0);
 
-                    System.out.println(u + " " + uc0 + " " + ud + " " + uc);
-                    System.out.println(v + " " + vc0 + " " + vd + " " + vc);
+							 System.out.println (u + " " + uc0 + " " + ud + " " + uc);
+							 System.out.println (v + " " + vc0 + " " + vd + " " + vc);
 
-                    if ((i == 0) && (ud == 'r'))
-                    {
-                        ustate = '6';
-                    }
-                    if (i + 1 == end)
-                    {
-                        vstate = '3';
-                    }
+							 if ( (i == 0) && (ud == 'r') )
+							 {
+								 ustate = '6';
+							 }
+							 if ( i + 1 == end )
+							 {
+								 vstate = '3';
+							 }
 
-                    boolean seen = (seenmers.contains(u) || seenmers.contains(v) || u.equals(v));
-                    seenmers.add(u);
+							 boolean seen = (seenmers.contains (u) || seenmers.contains (v) || u.equals (v));
+							 seenmers.add (u);
 
-                    if (seen)
-                    {
-                        chunk++;
-                        chunkstr = "c" + chunk;
-                        //#print STDERR "repeat internal to $tag: $uc u$i $chunk\n";
-                    }
+							 if ( seen )
+							 {
+								 chunk++;
+								 chunkstr = "c" + chunk;
+								 //#print STDERR "repeat internal to $tag: $uc u$i $chunk\n";
+							 }
 
-                    //System.out.println(uc + "\t" + t + "\t" + l + "\t" + tag + chunkstr + "\t" + ustate);
+							 //System.out.println(uc + "\t" + t + "\t" + l + "\t" + tag + chunkstr + "\t" + ustate);
 
-                    output.collect(new Text(uc),
-                            new Text(t + "\t" + l + "\t" + tag + chunkstr + "\t" + ustate));
+							 output.collect (new Text (uc),
+									 new Text (t + "\t" + l + "\t" + tag + chunkstr + "\t" + ustate));
 
-                    if (seen)
-                    {
-                        chunk++;
-                        chunkstr = "c" + chunk;
-                        //#print STDERR "repeat internal to $tag: $vc v$i $chunk\n";
-                    }
+							 if ( seen )
+							 {
+								 chunk++;
+								 chunkstr = "c" + chunk;
+								 //#print STDERR "repeat internal to $tag: $vc v$i $chunk\n";
+							 }
 
-                    //print "$vc\t$tr\t$f\t$tag$chunk\t$vstate\n";
+							 //print "$vc\t$tr\t$f\t$tag$chunk\t$vstate\n";
 
-                    System.out.println(vc + "\t" + tr + "\t" + f + "\t" + tag + chunkstr + "\t" + vstate);
+							 System.out.println (vc + "\t" + tr + "\t" + f + "\t" + tag + chunkstr + "\t" + vstate);
 
-                    output.collect(new Text(vc),
-                            new Text(tr + "\t" + f + "\t" + tag + chunkstr + "\t" + vstate));
+							 output.collect (new Text (vc),
+									 new Text (tr + "\t" + f + "\t" + tag + chunkstr + "\t" + vstate));
 
-                    ustate = 'm';
+							 ustate = 'm';
+						 }
                 }
-            }
+//            }
 
-            if (USE_GPU)
-            {
+//            if (USE_GPU)
+//            {
 
 //					rootbeer.run (m_jobs);
 
 
-                for (Kernel job : m_jobs)
+             /*   for (Kernel job : m_jobs)
                 {
                    BuildGraphMapKernelInterface kernel = (BuildGraphMapKernelInterface) job;
                     try
@@ -270,8 +356,8 @@ public class BuildGraph extends Configured implements Tool
                     }
 
 
-                }
-            }
+                }*/
+//            }
 
 
 			
