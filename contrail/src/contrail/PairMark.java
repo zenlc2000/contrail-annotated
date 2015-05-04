@@ -21,50 +21,50 @@ import java.util.List;
 import java.util.Random;
 
 
-public class PairMark extends Configured implements Tool 
-{	
+public class PairMark extends Configured implements Tool
+{
 	private static final Logger sLogger = Logger.getLogger(PairMark.class);
-	
-	private static class PairMarkMapper extends MapReduceBase 
-    implements Mapper<LongWritable, Text, Text, Text> 
+
+	private static class PairMarkMapper extends MapReduceBase
+    implements Mapper<LongWritable, Text, Text, Text>
 	{
 		private static long randseed = 0;
 		private Random rfactory = new Random();
 
         public static boolean USE_GPU;
-		
-		public void configure(JobConf job) 
+
+		public void configure(JobConf job)
 		{
 			randseed = Long.parseLong(job.get("randseed"));
             USE_GPU = Boolean.parseBoolean(job.get("USE_GPU"));
 		}
-		
+
 		public boolean isMale(String nodeid)
 		{
 			rfactory.setSeed(nodeid.hashCode() ^ randseed);
-			
+
 			double rand = rfactory.nextDouble();
-			
+
 			boolean male = (rand >= .5);
-			
+
 			//System.err.println(nodeid + " " + rand + " " + male);
 
 			return male;
 		}
-		
+
 		public TailInfo getBuddy(Node node, String dir)
 		{
 			if (node.canCompress(dir))
 			{
 				return node.gettail(dir);
 			}
-			
+
 			return null;
 		}
-		
+
 		public void map(LongWritable lineid, Text nodetxt,
                 OutputCollector<Text, Text> output, Reporter reporter)
-                throws IOException 
+                throws IOException
         {
 
 
@@ -77,8 +77,6 @@ public class PairMark extends Configured implements Tool
 
             if (USE_GPU)
             {
-                sLogger.info("----------> Starting PairMark Mapper GPU <----------");
-
 
                 String str_Fbuddy = fbuddy.toString();
                 String str_Rbuddy = rbuddy.toString();
@@ -212,19 +210,19 @@ else
                 }
             }
 			output.collect(new Text(node.getNodeId()), new Text(node.toNodeMsg()));
-			reporter.incrCounter("Contrail", "nodes", 1);	
+			reporter.incrCounter("Contrail", "nodes", 1);
         }
 	}
-	
-	private static class PairMarkReducer extends MapReduceBase 
-	implements Reducer<Text, Text, Text, Text> 
+
+	private static class PairMarkReducer extends MapReduceBase
+	implements Reducer<Text, Text, Text, Text>
 	{
 		private static long randseed = 0;
-		
+
 		public void configure(JobConf job) {
 			randseed = Long.parseLong(job.get("randseed"));
 		}
-		
+
 		private class Update
 		{
 			public String oid;
@@ -232,24 +230,24 @@ else
 			public String nid;
 			public String ndir;
 		}
-		
+
 		public void reduce(Text nodeid, Iterator<Text> iter,
 				OutputCollector<Text, Text> output, Reporter reporter)
-				throws IOException 
+				throws IOException
 		{
 			Node node = new Node(nodeid.toString());
 			List<Update> updates = new ArrayList<Update>();
-			
+
 			int sawnode = 0;
-			
+
 			while(iter.hasNext())
 			{
 				String msg = iter.next().toString();
-				
+
 				//System.err.println(key.toString() + "\t" + msg);
-				
+
 				String [] vals = msg.split("\t");
-				
+
 				if (vals[0].equals(Node.NODEMSG))
 				{
 					node.parseNodeMsg(vals, 0);
@@ -258,12 +256,12 @@ else
 				else if (vals[0].equals(Node.UPDATEMSG))
 				{
 					Update up = new Update();
-					
+
 					up.oid  = vals[1];
 					up.odir = vals[2];
 					up.nid  = vals[3];
 					up.ndir = vals[4];
-					
+
 					updates.add(up);
 				}
 				else
@@ -271,12 +269,12 @@ else
 					throw new IOException("Unknown msgtype: " + msg);
 				}
 			}
-			
+
 			if (sawnode != 1)
 			{
 				throw new IOException("ERROR: Didn't see exactly 1 nodemsg (" + sawnode + ") for " + nodeid.toString());
 			}
-			
+
 			if (updates.size() > 0)
 			{
 				for(Update up : updates)
@@ -284,25 +282,25 @@ else
 					node.replacelink(up.oid, up.odir, up.nid, up.ndir);
 				}
 			}
-			
+
 			output.collect(nodeid, new Text(node.toNodeMsg()));
 		}
 	}
 
-	
+
 	public RunningJob run(String inputPath, String outputPath, long randseed) throws Exception
-	{ 
+	{
 		sLogger.info("Tool name: PairMark");
 		sLogger.info(" - input: "  + inputPath);
 		sLogger.info(" - output: " + outputPath);
 		sLogger.info(" - randseed: " + randseed);
-		
+
 		JobConf conf = new JobConf(Stats.class);
 		conf.setJobName("PairMark " + inputPath);
-		
+
 		ContrailConfig.initializeConfiguration(conf);
 		conf.setLong("randseed", randseed);
-			
+
 		FileInputFormat.addInputPath(conf, new Path(inputPath));
 		FileOutputFormat.setOutputPath(conf, new Path(outputPath));
 
@@ -323,20 +321,20 @@ else
 
 		return JobClient.runJob(conf);
 	}
-	
-	
-	public int run(String[] args) throws Exception 
+
+
+	public int run(String[] args) throws Exception
 	{
 		String inputPath  = "/Users/mschatz/try/compressible/";
 		String outputPath = "/users/mschatz/try/mark1/";
 		long randseed = 123456789;
-		
+
 		run(inputPath, outputPath, randseed);
-		
+
 		return 0;
 	}
 
-	public static void main(String[] args) throws Exception 
+	public static void main(String[] args) throws Exception
 	{
 		int res = ToolRunner.run(new Configuration(), new PairMark(), args);
 		System.exit(res);

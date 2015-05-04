@@ -9,6 +9,6 @@ public interface BuildGraphMapKernelInterface
 
     public char[] getOutput_value2();
     
-    public String[] getSeenmers();
+//    public String[] getSeenmers();
 
 }
